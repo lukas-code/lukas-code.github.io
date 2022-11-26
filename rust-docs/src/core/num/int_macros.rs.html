@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/num/int_macros.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>int_macros.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/num/int_macros.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>int_macros.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -2768,6 +2768,21 @@
 <span id="2768">2768</span>
 <span id="2769">2769</span>
 <span id="2770">2770</span>
+<span id="2771">2771</span>
+<span id="2772">2772</span>
+<span id="2773">2773</span>
+<span id="2774">2774</span>
+<span id="2775">2775</span>
+<span id="2776">2776</span>
+<span id="2777">2777</span>
+<span id="2778">2778</span>
+<span id="2779">2779</span>
+<span id="2780">2780</span>
+<span id="2781">2781</span>
+<span id="2782">2782</span>
+<span id="2783">2783</span>
+<span id="2784">2784</span>
+<span id="2785">2785</span>
 </pre><pre class="rust"><code><span class="macro">macro_rules! </span>int_impl {
     (<span class="macro-nonterminal">$SelfT</span>:ty, <span class="macro-nonterminal">$ActualT</span>:ident, <span class="macro-nonterminal">$UnsignedT</span>:ty, <span class="macro-nonterminal">$BITS</span>:expr, <span class="macro-nonterminal">$BITS_MINUS_ONE</span>:expr, <span class="macro-nonterminal">$Min</span>:expr, <span class="macro-nonterminal">$Max</span>:expr,
      <span class="macro-nonterminal">$rot</span>:expr, <span class="macro-nonterminal">$rot_op</span>:expr, <span class="macro-nonterminal">$rot_result</span>:expr, <span class="macro-nonterminal">$swap_op</span>:expr, <span class="macro-nonterminal">$swapped</span>:expr,
@@ -2877,6 +2892,9 @@
 
         <span class="doccomment">/// Returns the number of leading zeros in the binary representation of `self`.
         ///
+        /// Depending on what you&#39;re doing with the value, you might also be interested in the
+        /// [`ilog2`] function which returns a consistent number, even if the type widens.
+        ///
         /// # Examples
         ///
         /// Basic usage:
@@ -2886,7 +2904,8 @@
         </span><span class="doccomment">///
         /// assert_eq!(n.leading_zeros(), 0);
         /// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
+        </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;[`ilog2`]: &quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::ilog2&quot;</span>)]
+        #[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
         #[rustc_const_stable(feature = <span class="string">&quot;const_int_methods&quot;</span>, since = <span class="string">&quot;1.32.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
@@ -3237,8 +3256,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(1&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.checked_add_unsigned(2), Some(3));&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX - 2).checked_add_unsigned(3), None);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -3305,8 +3324,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(1&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.checked_sub_unsigned(2), Some(-1));&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN + 2).checked_sub_unsigned(3), None);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -3527,10 +3546,11 @@
         #[rustc_const_unstable(feature = <span class="string">&quot;const_inherent_unchecked_arith&quot;</span>, issue = <span class="string">&quot;85122&quot;</span>)]
         #[inline(always)]
         #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
-        </span><span class="kw">pub const unsafe fn </span>unchecked_shl(<span class="self">self</span>, rhs: <span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        </span><span class="kw">pub const unsafe fn </span>unchecked_shl(<span class="self">self</span>, rhs: u32) -&gt; <span class="self">Self </span>{
             <span class="comment">// SAFETY: the caller must uphold the safety contract for
             // `unchecked_shl`.
-            </span><span class="kw">unsafe </span>{ intrinsics::unchecked_shl(<span class="self">self</span>, rhs) }
+            // Any legal shift amount is losslessly representable in the self type.
+            </span><span class="kw">unsafe </span>{ intrinsics::unchecked_shl(<span class="self">self</span>, rhs.try_into().ok().unwrap_unchecked()) }
         }
 
         <span class="doccomment">/// Checked shift right. Computes `self &gt;&gt; rhs`, returning `None` if `rhs` is
@@ -3574,10 +3594,11 @@
         #[rustc_const_unstable(feature = <span class="string">&quot;const_inherent_unchecked_arith&quot;</span>, issue = <span class="string">&quot;85122&quot;</span>)]
         #[inline(always)]
         #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
-        </span><span class="kw">pub const unsafe fn </span>unchecked_shr(<span class="self">self</span>, rhs: <span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        </span><span class="kw">pub const unsafe fn </span>unchecked_shr(<span class="self">self</span>, rhs: u32) -&gt; <span class="self">Self </span>{
             <span class="comment">// SAFETY: the caller must uphold the safety contract for
             // `unchecked_shr`.
-            </span><span class="kw">unsafe </span>{ intrinsics::unchecked_shr(<span class="self">self</span>, rhs) }
+            // Any legal shift amount is losslessly representable in the self type.
+            </span><span class="kw">unsafe </span>{ intrinsics::unchecked_shr(<span class="self">self</span>, rhs.try_into().ok().unwrap_unchecked()) }
         }
 
         <span class="doccomment">/// Checked absolute value. Computes `self.abs()`, returning `None` if
@@ -3675,8 +3696,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(1&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.saturating_add_unsigned(2), 3);&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX.saturating_add_unsigned(100), &quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -3721,8 +3742,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(100&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.saturating_sub_unsigned(127), -27);&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN.saturating_sub_unsigned(100), &quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -3899,8 +3920,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(100&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.wrapping_add_unsigned(27), 127);&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX.wrapping_add_unsigned(2), &quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN + 1);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline(always)]
@@ -3939,8 +3960,8 @@
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(0&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.wrapping_sub_unsigned(127), -127);&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((-2&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;).wrapping_sub_unsigned(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$UnsignedT</span>), <span class="string">&quot;::MAX), -1);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline(always)]
@@ -4124,11 +4145,12 @@
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline(always)]
+        #[rustc_allow_const_fn_unstable(const_inherent_unchecked_arith)]
         </span><span class="kw">pub const fn </span>wrapping_shl(<span class="self">self</span>, rhs: u32) -&gt; <span class="self">Self </span>{
             <span class="comment">// SAFETY: the masking by the bitsize of the type ensures that we do not shift
             // out of bounds
             </span><span class="kw">unsafe </span>{
-                intrinsics::unchecked_shl(<span class="self">self</span>, (rhs &amp; (<span class="macro-nonterminal">$BITS </span>- <span class="number">1</span>)) <span class="kw">as </span><span class="macro-nonterminal">$SelfT</span>)
+                <span class="self">self</span>.unchecked_shl(rhs &amp; (<span class="macro-nonterminal">$BITS </span>- <span class="number">1</span>))
             }
         }
 
@@ -4153,11 +4175,12 @@
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline(always)]
+        #[rustc_allow_const_fn_unstable(const_inherent_unchecked_arith)]
         </span><span class="kw">pub const fn </span>wrapping_shr(<span class="self">self</span>, rhs: u32) -&gt; <span class="self">Self </span>{
             <span class="comment">// SAFETY: the masking by the bitsize of the type ensures that we do not shift
             // out of bounds
             </span><span class="kw">unsafe </span>{
-                intrinsics::unchecked_shr(<span class="self">self</span>, (rhs &amp; (<span class="macro-nonterminal">$BITS </span>- <span class="number">1</span>)) <span class="kw">as </span><span class="macro-nonterminal">$SelfT</span>)
+                <span class="self">self</span>.unchecked_shr(rhs &amp; (<span class="macro-nonterminal">$BITS </span>- <span class="number">1</span>))
             }
         }
 
@@ -4336,8 +4359,8 @@
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN).overflowing_add_unsigned(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$UnsignedT</span>), <span class="string">&quot;::MAX), (&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX, false));&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX - 2).overflowing_add_unsigned(3), (&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN, true));&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -4418,8 +4441,8 @@
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX).overflowing_sub_unsigned(&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$UnsignedT</span>), <span class="string">&quot;::MAX), (&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN, false));&quot;</span>)]
         #[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!((&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MIN + 2).overflowing_sub_unsigned(3), (&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;::MAX, true));&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
-        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;mixed_integer_ops&quot;</span>, since = <span class="string">&quot;1.66.0&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -4838,11 +4861,15 @@
         </span><span class="kw">pub const fn </span>rem_euclid(<span class="self">self</span>, rhs: <span class="self">Self</span>) -&gt; <span class="self">Self </span>{
             <span class="kw">let </span>r = <span class="self">self </span>% rhs;
             <span class="kw">if </span>r &lt; <span class="number">0 </span>{
-                <span class="kw">if </span>rhs &lt; <span class="number">0 </span>{
-                    r - rhs
-                } <span class="kw">else </span>{
-                    r + rhs
-                }
+                <span class="comment">// Semantically equivalent to `if rhs &lt; 0 { r - rhs } else { r + rhs }`.
+                // If `rhs` is not `Self::MIN`, then `r + abs(rhs)` will not overflow
+                // and is clearly equivalent, because `r` is negative.
+                // Otherwise, `rhs` is `Self::MIN`, then we have
+                // `r.wrapping_add(Self::MIN.wrapping_abs())`, which evaluates
+                // to `r.wrapping_add(Self::MIN)`, which is equivalent to
+                // `r - Self::MIN`, which is what we wanted (and will not overflow
+                // for negative `r`).
+                </span>r.wrapping_add(rhs.wrapping_abs())
             } <span class="kw">else </span>{
                 r
             }
@@ -5041,15 +5068,16 @@
         /// # Panics
         ///
         /// This function will panic if `self` is less than or equal to zero,
-        /// or if `base` is less then 2.
+        /// or if `base` is less than 2.
         ///
         /// # Examples
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(5&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.ilog(5), 1);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_allow_const_fn_unstable(const_option)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5068,10 +5096,11 @@
         /// # Examples
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(2&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.ilog2(), 1);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_allow_const_fn_unstable(const_option)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5089,10 +5118,11 @@
         /// # Example
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(10&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.ilog10(), 1);&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_allow_const_fn_unstable(const_option)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5113,10 +5143,10 @@
         /// # Examples
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(5&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.checked_ilog(5), Some(1));&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5149,10 +5179,10 @@
         /// # Examples
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(2&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.checked_ilog2(), Some(1));&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5173,10 +5203,10 @@
         /// # Example
         ///
         /// ```
-        /// #![feature(int_log)]
         </span><span class="attribute">#[doc = <span class="macro">concat!</span>(<span class="string">&quot;assert_eq!(10&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$SelfT</span>), <span class="string">&quot;.checked_ilog10(), Some(1));&quot;</span>)]
         </span><span class="doccomment">/// ```
-        </span><span class="attribute">#[unstable(feature = <span class="string">&quot;int_log&quot;</span>, issue = <span class="string">&quot;70887&quot;</span>)]
+        </span><span class="attribute">#[stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
+        #[rustc_const_stable(feature = <span class="string">&quot;int_log&quot;</span>, since = <span class="string">&quot;CURRENT_RUSTC_VERSION&quot;</span>)]
         #[must_use = <span class="string">&quot;this returns the result of the operation, \
                       without modifying the original&quot;</span>]
         #[inline]
@@ -5539,4 +5569,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

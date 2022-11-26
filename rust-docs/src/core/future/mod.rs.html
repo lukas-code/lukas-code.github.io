@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/future/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/future/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -108,6 +108,18 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
 </pre><pre class="rust"><code><span class="attribute">#![stable(feature = <span class="string">&quot;futures_api&quot;</span>, since = <span class="string">&quot;1.36.0&quot;</span>)]
 
 </span><span class="doccomment">//! Asynchronous basic functionality.
@@ -119,12 +131,8 @@
 //! [`await`]: ../../std/keyword.await.html
 //! [async book]: https://rust-lang.github.io/async-book/
 
-</span><span class="kw">use crate</span>::{
-    ops::{Generator, GeneratorState},
-    pin::Pin,
-    ptr::NonNull,
-    task::{Context, Poll},
-};
+</span><span class="kw">use </span><span class="kw">crate</span>::ptr::NonNull;
+<span class="kw">use </span><span class="kw">crate</span>::task::Context;
 
 <span class="kw">mod </span>future;
 <span class="kw">mod </span>into_future;
@@ -158,7 +166,8 @@
 ///    non-Send/Sync as well, and we don&#39;t want that.
 ///
 /// It also simplifies the HIR lowering of `.await`.
-</span><span class="attribute">#[doc(hidden)]
+</span><span class="attribute">#[cfg_attr(not(bootstrap), lang = <span class="string">&quot;ResumeTy&quot;</span>)]
+#[doc(hidden)]
 #[unstable(feature = <span class="string">&quot;gen_future&quot;</span>, issue = <span class="string">&quot;50547&quot;</span>)]
 #[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub struct </span>ResumeTy(NonNull&lt;Context&lt;<span class="lifetime">&#39;static</span>&gt;&gt;);
@@ -174,15 +183,21 @@
 /// This function returns a `GenFuture` underneath, but hides it in `impl Trait` to give
 /// better error messages (`impl Future` rather than `GenFuture&lt;[closure.....]&gt;`).
 </span><span class="comment">// This is `const` to avoid extra errors after we recover from `const async fn`
-</span><span class="attribute">#[lang = <span class="string">&quot;from_generator&quot;</span>]
+</span><span class="attribute">#[cfg_attr(bootstrap, lang = <span class="string">&quot;from_generator&quot;</span>)]
 #[doc(hidden)]
 #[unstable(feature = <span class="string">&quot;gen_future&quot;</span>, issue = <span class="string">&quot;50547&quot;</span>)]
 #[rustc_const_unstable(feature = <span class="string">&quot;gen_future&quot;</span>, issue = <span class="string">&quot;50547&quot;</span>)]
 #[inline]
 </span><span class="kw">pub const fn </span>from_generator&lt;T&gt;(gen: T) -&gt; <span class="kw">impl </span>Future&lt;Output = T::Return&gt;
 <span class="kw">where
-    </span>T: Generator&lt;ResumeTy, Yield = ()&gt;,
+    </span>T: <span class="kw">crate</span>::ops::Generator&lt;ResumeTy, Yield = ()&gt;,
 {
+    <span class="kw">use crate</span>::{
+        ops::{Generator, GeneratorState},
+        pin::Pin,
+        task::Poll,
+    };
+
     <span class="attribute">#[rustc_diagnostic_item = <span class="string">&quot;gen_future&quot;</span>]
     </span><span class="kw">struct </span>GenFuture&lt;T: Generator&lt;ResumeTy, Yield = ()&gt;&gt;(T);
 
@@ -192,7 +207,8 @@
 
     <span class="kw">impl</span>&lt;T: Generator&lt;ResumeTy, Yield = ()&gt;&gt; Future <span class="kw">for </span>GenFuture&lt;T&gt; {
         <span class="kw">type </span>Output = T::Return;
-        <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
+        <span class="attribute">#[track_caller]
+        </span><span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
             <span class="comment">// SAFETY: Safe because we&#39;re !Unpin + !Drop, and this is just a field projection.
             </span><span class="kw">let </span>gen = <span class="kw">unsafe </span>{ Pin::map_unchecked_mut(<span class="self">self</span>, |s| <span class="kw-2">&amp;mut </span>s.<span class="number">0</span>) };
 
@@ -218,5 +234,13 @@
     // that fulfills all the requirements for a mutable reference.
     </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>cx.<span class="number">0</span>.as_ptr().cast() }
 }
+
+<span class="attribute">#[cfg_attr(not(bootstrap), lang = <span class="string">&quot;identity_future&quot;</span>)]
+#[doc(hidden)]
+#[unstable(feature = <span class="string">&quot;gen_future&quot;</span>, issue = <span class="string">&quot;50547&quot;</span>)]
+#[inline]
+</span><span class="kw">pub const fn </span>identity_future&lt;O, Fut: Future&lt;Output = O&gt;&gt;(f: Fut) -&gt; Fut {
+    f
+}
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

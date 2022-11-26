@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ffi/c_str.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>c_str.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ffi/c_str.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>c_str.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -635,6 +635,35 @@
 <span id="635">635</span>
 <span id="636">636</span>
 <span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::cmp::Ordering;
 <span class="kw">use </span><span class="kw">crate</span>::ffi::c_char;
 <span class="kw">use </span><span class="kw">crate</span>::fmt;
@@ -650,9 +679,9 @@
 /// array of bytes. It can be constructed safely from a &lt;code&gt;&amp;[[u8]]&lt;/code&gt;
 /// slice, or unsafely from a raw `*const c_char`. It can then be
 /// converted to a Rust &lt;code&gt;&amp;[str]&lt;/code&gt; by performing UTF-8 validation, or
-/// into an owned `CString`.
+/// into an owned [`CString`].
 ///
-/// `&amp;CStr` is to `CString` as &lt;code&gt;&amp;[str]&lt;/code&gt; is to `String`: the former
+/// `&amp;CStr` is to [`CString`] as &lt;code&gt;&amp;[str]&lt;/code&gt; is to [`String`]: the former
 /// in each pair are borrowed references; the latter are owned
 /// strings.
 ///
@@ -660,6 +689,9 @@
 /// placed in the signatures of FFI functions. Instead, safe wrappers of FFI
 /// functions may leverage the unsafe [`CStr::from_ptr`] constructor to provide
 /// a safe interface to other consumers.
+///
+/// [`CString`]: ../../std/ffi/struct.CString.html
+/// [`String`]: ../../std/string/struct.String.html
 ///
 /// # Examples
 ///
@@ -858,9 +890,7 @@
     /// # Examples
     ///
     /// ```ignore (extern-declaration)
-    /// # fn main() {
-    /// use std::ffi::CStr;
-    /// use std::os::raw::c_char;
+    /// use std::ffi::{c_char, CStr};
     ///
     /// extern &quot;C&quot; {
     ///     fn my_string() -&gt; *const c_char;
@@ -870,14 +900,26 @@
     ///     let slice = CStr::from_ptr(my_string());
     ///     println!(&quot;string returned: {}&quot;, slice.to_str().unwrap());
     /// }
-    /// # }
+    /// ```
+    ///
+    /// ```
+    /// #![feature(const_cstr_methods)]
+    ///
+    /// use std::ffi::{c_char, CStr};
+    ///
+    /// const HELLO_PTR: *const c_char = {
+    ///     const BYTES: &amp;[u8] = b&quot;Hello, world!\0&quot;;
+    ///     BYTES.as_ptr().cast()
+    /// };
+    /// const HELLO: &amp;CStr = unsafe { CStr::from_ptr(HELLO_PTR) };
     /// ```
     ///
     /// [valid]: core::ptr#safety
     </span><span class="attribute">#[inline]
     #[must_use]
     #[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">pub unsafe fn </span>from_ptr&lt;<span class="lifetime">&#39;a</span>&gt;(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>CStr {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_cstr_methods&quot;</span>, issue = <span class="string">&quot;101719&quot;</span>)]
+    </span><span class="kw">pub const unsafe fn </span>from_ptr&lt;<span class="lifetime">&#39;a</span>&gt;(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>CStr {
         <span class="comment">// SAFETY: The caller has provided a pointer that points to a valid C
         // string with a NUL terminator of size less than `isize::MAX`, whose
         // content remain valid and doesn&#39;t change for the lifetime of the
@@ -889,13 +931,29 @@
         //
         // The cast from c_char to u8 is ok because a c_char is always one byte.
         </span><span class="kw">unsafe </span>{
-            <span class="kw">extern </span><span class="string">&quot;C&quot; </span>{
-                <span class="doccomment">/// Provided by libc or compiler_builtins.
-                </span><span class="kw">fn </span>strlen(s: <span class="kw-2">*const </span>c_char) -&gt; usize;
+            <span class="kw">const fn </span>strlen_ct(s: <span class="kw-2">*const </span>c_char) -&gt; usize {
+                <span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
+
+                <span class="comment">// SAFETY: Outer caller has provided a pointer to a valid C string.
+                </span><span class="kw">while unsafe </span>{ <span class="kw-2">*</span>s.add(len) } != <span class="number">0 </span>{
+                    len += <span class="number">1</span>;
+                }
+
+                len
             }
-            <span class="kw">let </span>len = strlen(ptr);
-            <span class="kw">let </span>ptr = ptr <span class="kw">as </span><span class="kw-2">*const </span>u8;
-            CStr::from_bytes_with_nul_unchecked(slice::from_raw_parts(ptr, len <span class="kw">as </span>usize + <span class="number">1</span>))
+
+            <span class="kw">fn </span>strlen_rt(s: <span class="kw-2">*const </span>c_char) -&gt; usize {
+                <span class="kw">extern </span><span class="string">&quot;C&quot; </span>{
+                    <span class="doccomment">/// Provided by libc or compiler_builtins.
+                    </span><span class="kw">fn </span>strlen(s: <span class="kw-2">*const </span>c_char) -&gt; usize;
+                }
+
+                <span class="comment">// SAFETY: Outer caller has provided a pointer to a valid C string.
+                </span><span class="kw">unsafe </span>{ strlen(s) }
+            }
+
+            <span class="kw">let </span>len = intrinsics::const_eval_select((ptr,), strlen_ct, strlen_rt);
+            <span class="self">Self</span>::from_bytes_with_nul_unchecked(slice::from_raw_parts(ptr.cast(), len + <span class="number">1</span>))
         }
     }
 
@@ -1273,4 +1331,4 @@
     </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

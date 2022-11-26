@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ptr/mut_ptr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mut_ptr.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ptr/mut_ptr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mut_ptr.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -2179,6 +2179,66 @@
 <span id="2179">2179</span>
 <span id="2180">2180</span>
 <span id="2181">2181</span>
+<span id="2182">2182</span>
+<span id="2183">2183</span>
+<span id="2184">2184</span>
+<span id="2185">2185</span>
+<span id="2186">2186</span>
+<span id="2187">2187</span>
+<span id="2188">2188</span>
+<span id="2189">2189</span>
+<span id="2190">2190</span>
+<span id="2191">2191</span>
+<span id="2192">2192</span>
+<span id="2193">2193</span>
+<span id="2194">2194</span>
+<span id="2195">2195</span>
+<span id="2196">2196</span>
+<span id="2197">2197</span>
+<span id="2198">2198</span>
+<span id="2199">2199</span>
+<span id="2200">2200</span>
+<span id="2201">2201</span>
+<span id="2202">2202</span>
+<span id="2203">2203</span>
+<span id="2204">2204</span>
+<span id="2205">2205</span>
+<span id="2206">2206</span>
+<span id="2207">2207</span>
+<span id="2208">2208</span>
+<span id="2209">2209</span>
+<span id="2210">2210</span>
+<span id="2211">2211</span>
+<span id="2212">2212</span>
+<span id="2213">2213</span>
+<span id="2214">2214</span>
+<span id="2215">2215</span>
+<span id="2216">2216</span>
+<span id="2217">2217</span>
+<span id="2218">2218</span>
+<span id="2219">2219</span>
+<span id="2220">2220</span>
+<span id="2221">2221</span>
+<span id="2222">2222</span>
+<span id="2223">2223</span>
+<span id="2224">2224</span>
+<span id="2225">2225</span>
+<span id="2226">2226</span>
+<span id="2227">2227</span>
+<span id="2228">2228</span>
+<span id="2229">2229</span>
+<span id="2230">2230</span>
+<span id="2231">2231</span>
+<span id="2232">2232</span>
+<span id="2233">2233</span>
+<span id="2234">2234</span>
+<span id="2235">2235</span>
+<span id="2236">2236</span>
+<span id="2237">2237</span>
+<span id="2238">2238</span>
+<span id="2239">2239</span>
+<span id="2240">2240</span>
+<span id="2241">2241</span>
 </pre><pre class="rust"><code><span class="kw">use super</span>::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::cmp::Ordering::{<span class="self">self</span>, Equal, Greater, Less};
 <span class="kw">use </span><span class="kw">crate</span>::intrinsics;
@@ -2259,19 +2319,14 @@
     /// }
     /// ```
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;set_ptr_value&quot;</span>, issue = <span class="string">&quot;75091&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;set_ptr_value&quot;</span>, issue = <span class="string">&quot;75091&quot;</span>)]
     #[must_use = <span class="string">&quot;returns a new pointer rather than modifying its argument&quot;</span>]
     #[inline]
-    </span><span class="kw">pub fn </span>with_metadata_of&lt;U&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>val: <span class="kw-2">*mut </span>U) -&gt; <span class="kw-2">*mut </span>U
+    </span><span class="kw">pub const fn </span>with_metadata_of&lt;U&gt;(<span class="self">self</span>, meta: <span class="kw-2">*const </span>U) -&gt; <span class="kw-2">*mut </span>U
     <span class="kw">where
         </span>U: <span class="question-mark">?</span>Sized,
     {
-        <span class="kw">let </span>target = <span class="kw-2">&amp;mut </span>val <span class="kw">as </span><span class="kw-2">*mut *mut </span>U <span class="kw">as </span><span class="kw-2">*mut *mut </span>u8;
-        <span class="comment">// SAFETY: In case of a thin pointer, this operations is identical
-        // to a simple assignment. In case of a fat pointer, with the current
-        // fat pointer layout implementation, the first field of such a
-        // pointer is always the data pointer, which is likewise assigned.
-        </span><span class="kw">unsafe </span>{ <span class="kw-2">*</span>target = <span class="self">self </span><span class="kw">as </span><span class="kw-2">*mut </span>u8 };
-        val
+        from_raw_parts_mut::&lt;U&gt;(<span class="self">self </span><span class="kw">as </span><span class="kw-2">*mut </span>(), metadata(meta))
     }
 
     <span class="doccomment">/// Changes constness without changing the type.
@@ -2303,14 +2358,21 @@
     ///
     /// ```
     /// #![feature(ptr_to_from_bits)]
+    /// # #[cfg(not(miri))] { // doctest does not work with strict provenance
     /// let mut array = [13, 42];
     /// let mut it = array.iter_mut();
     /// let p0: *mut i32 = it.next().unwrap();
     /// assert_eq!(&lt;*mut _&gt;::from_bits(p0.to_bits()), p0);
     /// let p1: *mut i32 = it.next().unwrap();
     /// assert_eq!(p1.to_bits() - p0.to_bits(), 4);
+    /// }
     /// ```
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;ptr_to_from_bits&quot;</span>, issue = <span class="string">&quot;91126&quot;</span>)]
+    #[deprecated(
+        since = <span class="string">&quot;1.67&quot;</span>,
+        note = <span class="string">&quot;replaced by the `exposed_addr` method, or update your code \
+            to follow the strict provenance rules using its APIs&quot;
+    </span>)]
     </span><span class="kw">pub fn </span>to_bits(<span class="self">self</span>) -&gt; usize
     <span class="kw">where
         </span>T: Sized,
@@ -2327,11 +2389,19 @@
     ///
     /// ```
     /// #![feature(ptr_to_from_bits)]
+    /// # #[cfg(not(miri))] { // doctest does not work with strict provenance
     /// use std::ptr::NonNull;
     /// let dangling: *mut u8 = NonNull::dangling().as_ptr();
     /// assert_eq!(&lt;*mut u8&gt;::from_bits(1), dangling);
+    /// }
     /// ```
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;ptr_to_from_bits&quot;</span>, issue = <span class="string">&quot;91126&quot;</span>)]
+    #[deprecated(
+        since = <span class="string">&quot;1.67&quot;</span>,
+        note = <span class="string">&quot;replaced by the `ptr::from_exposed_addr_mut` function, or \
+            update your code to follow the strict provenance rules using its APIs&quot;
+    </span>)]
+    #[allow(fuzzy_provenance_casts)] </span><span class="comment">// this is an unstable and semi-deprecated cast function
     </span><span class="kw">pub fn </span>from_bits(bits: usize) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: Sized,
@@ -2673,8 +2743,7 @@
     #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
     </span><span class="kw">pub const unsafe fn </span>byte_offset(<span class="self">self</span>, count: isize) -&gt; <span class="self">Self </span>{
         <span class="comment">// SAFETY: the caller must uphold the safety contract for `offset`.
-        </span><span class="kw">let </span>this = <span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().offset(count).cast::&lt;()&gt;() };
-        from_raw_parts_mut::&lt;T&gt;(this, metadata(<span class="self">self</span>))
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().offset(count).with_metadata_of(<span class="self">self</span>) }
     }
 
     <span class="doccomment">/// Calculates the offset from a pointer using wrapping arithmetic.
@@ -2753,10 +2822,7 @@
     #[unstable(feature = <span class="string">&quot;pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     </span><span class="kw">pub const fn </span>wrapping_byte_offset(<span class="self">self</span>, count: isize) -&gt; <span class="self">Self </span>{
-        from_raw_parts_mut::&lt;T&gt;(
-            <span class="self">self</span>.cast::&lt;u8&gt;().wrapping_offset(count).cast::&lt;()&gt;(),
-            metadata(<span class="self">self</span>),
-        )
+        <span class="self">self</span>.cast::&lt;u8&gt;().wrapping_offset(count).with_metadata_of(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Masks out bits of the pointer according to a mask.
@@ -2765,12 +2831,39 @@
     ///
     /// For non-`Sized` pointees this operation changes only the data pointer,
     /// leaving the metadata untouched.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// #![feature(ptr_mask, strict_provenance)]
+    /// let mut v = 17_u32;
+    /// let ptr: *mut u32 = &amp;mut v;
+    ///
+    /// // `u32` is 4 bytes aligned,
+    /// // which means that lower 2 bits are always 0.
+    /// let tag_mask = 0b11;
+    /// let ptr_mask = !tag_mask;
+    ///
+    /// // We can store something in these lower bits
+    /// let tagged_ptr = ptr.map_addr(|a| a | 0b10);
+    ///
+    /// // Get the &quot;tag&quot; back
+    /// let tag = tagged_ptr.addr() &amp; tag_mask;
+    /// assert_eq!(tag, 0b10);
+    ///
+    /// // Note that `tagged_ptr` is unaligned, it&#39;s UB to read from/write to it.
+    /// // To get original pointer `mask` can be used:
+    /// let masked_ptr = tagged_ptr.mask(ptr_mask);
+    /// assert_eq!(unsafe { *masked_ptr }, 17);
+    ///
+    /// unsafe { *masked_ptr = 0 };
+    /// assert_eq!(v, 0);
+    /// ```
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;ptr_mask&quot;</span>, issue = <span class="string">&quot;98290&quot;</span>)]
     #[must_use = <span class="string">&quot;returns a new pointer rather than modifying its argument&quot;</span>]
     #[inline(always)]
     </span><span class="kw">pub fn </span>mask(<span class="self">self</span>, mask: usize) -&gt; <span class="kw-2">*mut </span>T {
-        <span class="kw">let </span>this = intrinsics::ptr_mask(<span class="self">self</span>.cast::&lt;()&gt;(), mask) <span class="kw">as </span><span class="kw-2">*mut </span>();
-        from_raw_parts_mut::&lt;T&gt;(this, metadata(<span class="self">self</span>))
+        intrinsics::ptr_mask(<span class="self">self</span>.cast::&lt;()&gt;(), mask).cast_mut().with_metadata_of(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Returns `None` if the pointer is null, or else returns a unique reference to
@@ -2907,7 +3000,7 @@
 
     <span class="doccomment">/// Returns whether two pointers are guaranteed to be inequal.
     ///
-    /// At runtime this function behaves like `Some(self == other)`.
+    /// At runtime this function behaves like `Some(self != other)`.
     /// However, in some contexts (e.g., compile-time evaluation),
     /// it is not always possible to determine inequality of two pointers, so this function may
     /// spuriously return `None` for pointers that later actually turn out to have its inequality known.
@@ -3038,7 +3131,7 @@
     #[unstable(feature = <span class="string">&quot;pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
-    </span><span class="kw">pub const unsafe fn </span>byte_offset_from(<span class="self">self</span>, origin: <span class="kw-2">*const </span>T) -&gt; isize {
+    </span><span class="kw">pub const unsafe fn </span>byte_offset_from&lt;U: <span class="question-mark">?</span>Sized&gt;(<span class="self">self</span>, origin: <span class="kw-2">*const </span>U) -&gt; isize {
         <span class="comment">// SAFETY: the caller must uphold the safety contract for `offset_from`.
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().offset_from(origin.cast::&lt;u8&gt;()) }
     }
@@ -3197,8 +3290,7 @@
     #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
     </span><span class="kw">pub const unsafe fn </span>byte_add(<span class="self">self</span>, count: usize) -&gt; <span class="self">Self </span>{
         <span class="comment">// SAFETY: the caller must uphold the safety contract for `add`.
-        </span><span class="kw">let </span>this = <span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().add(count).cast::&lt;()&gt;() };
-        from_raw_parts_mut::&lt;T&gt;(this, metadata(<span class="self">self</span>))
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().add(count).with_metadata_of(<span class="self">self</span>) }
     }
 
     <span class="doccomment">/// Calculates the offset from a pointer (convenience for
@@ -3284,8 +3376,7 @@
     #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
     </span><span class="kw">pub const unsafe fn </span>byte_sub(<span class="self">self</span>, count: usize) -&gt; <span class="self">Self </span>{
         <span class="comment">// SAFETY: the caller must uphold the safety contract for `sub`.
-        </span><span class="kw">let </span>this = <span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().sub(count).cast::&lt;()&gt;() };
-        from_raw_parts_mut::&lt;T&gt;(this, metadata(<span class="self">self</span>))
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.cast::&lt;u8&gt;().sub(count).with_metadata_of(<span class="self">self</span>) }
     }
 
     <span class="doccomment">/// Calculates the offset from a pointer using wrapping arithmetic.
@@ -3365,7 +3456,7 @@
     #[unstable(feature = <span class="string">&quot;pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     </span><span class="kw">pub const fn </span>wrapping_byte_add(<span class="self">self</span>, count: usize) -&gt; <span class="self">Self </span>{
-        from_raw_parts_mut::&lt;T&gt;(<span class="self">self</span>.cast::&lt;u8&gt;().wrapping_add(count).cast::&lt;()&gt;(), metadata(<span class="self">self</span>))
+        <span class="self">self</span>.cast::&lt;u8&gt;().wrapping_add(count).with_metadata_of(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Calculates the offset from a pointer using wrapping arithmetic.
@@ -3445,7 +3536,7 @@
     #[unstable(feature = <span class="string">&quot;pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_byte_offsets&quot;</span>, issue = <span class="string">&quot;96283&quot;</span>)]
     </span><span class="kw">pub const fn </span>wrapping_byte_sub(<span class="self">self</span>, count: usize) -&gt; <span class="self">Self </span>{
-        from_raw_parts_mut::&lt;T&gt;(<span class="self">self</span>.cast::&lt;u8&gt;().wrapping_sub(count).cast::&lt;()&gt;(), metadata(<span class="self">self</span>))
+        <span class="self">self</span>.cast::&lt;u8&gt;().wrapping_sub(count).with_metadata_of(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Reads the value from `self` without moving it. This leaves the
@@ -3754,6 +3845,7 @@
     /// # }
     /// ```
     </span><span class="attribute">#[must_use]
+    #[inline]
     #[stable(feature = <span class="string">&quot;align_offset&quot;</span>, since = <span class="string">&quot;1.36.0&quot;</span>)]
     #[rustc_const_unstable(feature = <span class="string">&quot;const_align_offset&quot;</span>, issue = <span class="string">&quot;90962&quot;</span>)]
     </span><span class="kw">pub const fn </span>align_offset(<span class="self">self</span>, align: usize) -&gt; usize
@@ -3799,8 +3891,12 @@
     /// #![feature(pointer_is_aligned)]
     /// #![feature(pointer_byte_offsets)]
     ///
-    /// let data: i32 = 42;
-    /// let ptr: *const i32 = &amp;data;
+    /// // On some platforms, the alignment of i32 is less than 4.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    ///
+    /// let mut data = AlignedI32(42);
+    /// let ptr = &amp;mut data as *mut AlignedI32;
     ///
     /// assert!(ptr.is_aligned());
     /// assert!(!ptr.wrapping_byte_add(1).is_aligned());
@@ -3820,16 +3916,22 @@
     #[cfg_attr(not(bootstrap), doc = <span class="string">&quot;```&quot;</span>)]
     </span><span class="doccomment">/// #![feature(pointer_is_aligned)]
     /// #![feature(const_pointer_is_aligned)]
+    /// #![feature(const_mut_refs)]
+    ///
+    /// // On some platforms, the alignment of primitives is less than their size.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    /// #[repr(align(8))]
+    /// struct AlignedI64(i64);
     ///
     /// const _: () = {
-    ///     let data: i32 = 42;
-    ///     let ptr: *const i32 = &amp;data;
+    ///     let mut data = AlignedI32(42);
+    ///     let ptr = &amp;mut data as *mut AlignedI32;
     ///     assert!(ptr.is_aligned());
     ///
-    ///     // At runtime either `ptr1` or `ptr2` would be aligned,
-    ///     // but at compiletime neither is aligned.
-    ///     let ptr1: *const i64 = ptr.cast();
-    ///     let ptr2: *const i64 = ptr.wrapping_add(1).cast();
+    ///     // At runtime either `ptr1` or `ptr2` would be aligned, but at compiletime neither is aligned.
+    ///     let ptr1 = ptr.cast::&lt;AlignedI64&gt;();
+    ///     let ptr2 = ptr.wrapping_add(1).cast::&lt;AlignedI64&gt;();
     ///     assert!(!ptr1.is_aligned());
     ///     assert!(!ptr2.is_aligned());
     /// };
@@ -3843,16 +3945,23 @@
     </span><span class="doccomment">/// #![feature(pointer_is_aligned)]
     /// #![feature(const_pointer_is_aligned)]
     ///
-    /// // At compiletime, neither `CONST_PTR` nor `CONST_PTR + 1` is aligned.
-    /// const CONST_PTR: *const i32 = &amp;42;
-    /// const _: () = assert!(!CONST_PTR.cast::&lt;i64&gt;().is_aligned());
-    /// const _: () = assert!(!CONST_PTR.wrapping_add(1).cast::&lt;i64&gt;().is_aligned());
+    /// // On some platforms, the alignment of primitives is less than their size.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    /// #[repr(align(8))]
+    /// struct AlignedI64(i64);
+    ///
+    /// // At compiletime, neither `COMPTIME_PTR` nor `COMPTIME_PTR + 1` is aligned.
+    /// // Also, note that mutable references are not allowed in the final value of constants.
+    /// const COMPTIME_PTR: *mut AlignedI32 = (&amp;AlignedI32(42) as *const AlignedI32).cast_mut();
+    /// const _: () = assert!(!COMPTIME_PTR.cast::&lt;AlignedI64&gt;().is_aligned());
+    /// const _: () = assert!(!COMPTIME_PTR.wrapping_add(1).cast::&lt;AlignedI64&gt;().is_aligned());
     ///
     /// // At runtime, either `runtime_ptr` or `runtime_ptr + 1` is aligned.
-    /// let runtime_ptr = CONST_PTR;
+    /// let runtime_ptr = COMPTIME_PTR;
     /// assert_ne!(
-    ///     runtime_ptr.cast::&lt;i64&gt;().is_aligned(),
-    ///     runtime_ptr.wrapping_add(1).cast::&lt;i64&gt;().is_aligned(),
+    ///     runtime_ptr.cast::&lt;AlignedI64&gt;().is_aligned(),
+    ///     runtime_ptr.wrapping_add(1).cast::&lt;AlignedI64&gt;().is_aligned(),
     /// );
     /// ```
     ///
@@ -3864,29 +3973,34 @@
     </span><span class="doccomment">/// #![feature(pointer_is_aligned)]
     /// #![feature(const_pointer_is_aligned)]
     ///
+    /// // On some platforms, the alignment of primitives is less than their size.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    /// #[repr(align(8))]
+    /// struct AlignedI64(i64);
+    ///
     /// const _: () = {
-    ///     let ptr = 40 as *const i32;
+    ///     let ptr = 40 as *mut AlignedI32;
     ///     assert!(ptr.is_aligned());
     ///
-    ///     // For pointers with a known address, runtime and
-    ///     // compiletime behavior are identical.
-    ///     let ptr1: *const i64 = ptr.cast();
-    ///     let ptr2: *const i64 = ptr.wrapping_add(1).cast();
+    ///     // For pointers with a known address, runtime and compiletime behavior are identical.
+    ///     let ptr1 = ptr.cast::&lt;AlignedI64&gt;();
+    ///     let ptr2 = ptr.wrapping_add(1).cast::&lt;AlignedI64&gt;();
     ///     assert!(ptr1.is_aligned());
     ///     assert!(!ptr2.is_aligned());
     /// };
     /// ```
     ///
-    /// [tracking issue]: https://github.com/rust-lang/rust/issues/comming-soon
+    /// [tracking issue]: https://github.com/rust-lang/rust/issues/104203
     </span><span class="attribute">#[must_use]
     #[inline]
     #[unstable(feature = <span class="string">&quot;pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;96284&quot;</span>)]
-    #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;none&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;104203&quot;</span>)]
     </span><span class="kw">pub const fn </span>is_aligned(<span class="self">self</span>) -&gt; bool
     <span class="kw">where
         </span>T: Sized,
     {
-        <span class="self">self</span>.is_aligned_to(core::mem::align_of::&lt;T&gt;())
+        <span class="self">self</span>.is_aligned_to(mem::align_of::&lt;T&gt;())
     }
 
     <span class="doccomment">/// Returns whether the pointer is aligned to `align`.
@@ -3905,8 +4019,12 @@
     /// #![feature(pointer_is_aligned)]
     /// #![feature(pointer_byte_offsets)]
     ///
-    /// let data: i32 = 42;
-    /// let ptr: *const i32 = &amp;data;
+    /// // On some platforms, the alignment of i32 is less than 4.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    ///
+    /// let mut data = AlignedI32(42);
+    /// let ptr = &amp;mut data as *mut AlignedI32;
     ///
     /// assert!(ptr.is_aligned_to(1));
     /// assert!(ptr.is_aligned_to(2));
@@ -3931,10 +4049,15 @@
     #[cfg_attr(not(bootstrap), doc = <span class="string">&quot;```&quot;</span>)]
     </span><span class="doccomment">/// #![feature(pointer_is_aligned)]
     /// #![feature(const_pointer_is_aligned)]
+    /// #![feature(const_mut_refs)]
+    ///
+    /// // On some platforms, the alignment of i32 is less than 4.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
     ///
     /// const _: () = {
-    ///     let data: i32 = 42;
-    ///     let ptr: *const i32 = &amp;data;
+    ///     let mut data = AlignedI32(42);
+    ///     let ptr = &amp;mut data as *mut AlignedI32;
     ///
     ///     assert!(ptr.is_aligned_to(1));
     ///     assert!(ptr.is_aligned_to(2));
@@ -3954,13 +4077,18 @@
     </span><span class="doccomment">/// #![feature(pointer_is_aligned)]
     /// #![feature(const_pointer_is_aligned)]
     ///
-    /// // At compiletime, neither `CONST_PTR` nor `CONST_PTR + 1` is aligned.
-    /// const CONST_PTR: *const i32 = &amp;42;
-    /// const _: () = assert!(!CONST_PTR.is_aligned_to(8));
-    /// const _: () = assert!(!CONST_PTR.wrapping_add(1).is_aligned_to(8));
+    /// // On some platforms, the alignment of i32 is less than 4.
+    /// #[repr(align(4))]
+    /// struct AlignedI32(i32);
+    ///
+    /// // At compiletime, neither `COMPTIME_PTR` nor `COMPTIME_PTR + 1` is aligned.
+    /// // Also, note that mutable references are not allowed in the final value of constants.
+    /// const COMPTIME_PTR: *mut AlignedI32 = (&amp;AlignedI32(42) as *const AlignedI32).cast_mut();
+    /// const _: () = assert!(!COMPTIME_PTR.is_aligned_to(8));
+    /// const _: () = assert!(!COMPTIME_PTR.wrapping_add(1).is_aligned_to(8));
     ///
     /// // At runtime, either `runtime_ptr` or `runtime_ptr + 1` is aligned.
-    /// let runtime_ptr = CONST_PTR;
+    /// let runtime_ptr = COMPTIME_PTR;
     /// assert_ne!(
     ///     runtime_ptr.is_aligned_to(8),
     ///     runtime_ptr.wrapping_add(1).is_aligned_to(8),
@@ -3976,7 +4104,7 @@
     /// #![feature(const_pointer_is_aligned)]
     ///
     /// const _: () = {
-    ///     let ptr = 40 as *const i32;
+    ///     let ptr = 40 as *mut u8;
     ///     assert!(ptr.is_aligned_to(1));
     ///     assert!(ptr.is_aligned_to(2));
     ///     assert!(ptr.is_aligned_to(4));
@@ -3985,30 +4113,22 @@
     /// };
     /// ```
     ///
-    /// [tracking issue]: https://github.com/rust-lang/rust/issues/comming-soon
+    /// [tracking issue]: https://github.com/rust-lang/rust/issues/104203
     </span><span class="attribute">#[must_use]
     #[inline]
     #[unstable(feature = <span class="string">&quot;pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;96284&quot;</span>)]
-    #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;none&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_pointer_is_aligned&quot;</span>, issue = <span class="string">&quot;104203&quot;</span>)]
     </span><span class="kw">pub const fn </span>is_aligned_to(<span class="self">self</span>, align: usize) -&gt; bool {
         <span class="kw">if </span>!align.is_power_of_two() {
-            <span class="macro">panic!</span>(<span class="string">&quot;is_aligned_to: align is not a power-of-two&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">&quot;is_aligned_to: align is not a power-of-two&quot;</span>);
         }
 
-        <span class="attribute">#[inline]
-        </span><span class="kw">fn </span>runtime(ptr: <span class="kw-2">*mut </span>u8, align: usize) -&gt; bool {
-            ptr.addr() &amp; (align - <span class="number">1</span>) == <span class="number">0
-        </span>}
-
-        <span class="comment">// This optimizes to `(ptr + align - 1) &amp; -align == ptr`, which is slightly
-        // slower than `ptr &amp; (align - 1) == 0`
-        </span><span class="kw">const fn </span>comptime(ptr: <span class="kw-2">*mut </span>u8, align: usize) -&gt; bool {
-            ptr.align_offset(align) == <span class="number">0
-        </span>}
-
-        <span class="comment">// SAFETY: `ptr.align_offset(align)` returns 0 if and only if the pointer is already aligned.
-        </span><span class="kw">unsafe </span>{ intrinsics::const_eval_select((<span class="self">self</span>.cast::&lt;u8&gt;(), align), comptime, runtime) }
-    }
+        <span class="comment">// We can&#39;t use the address of `self` in a `const fn`, so we use `align_offset` instead.
+        // The cast to `()` is used to
+        //   1. deal with fat pointers; and
+        //   2. ensure that `align_offset` doesn&#39;t actually try to compute an offset.
+        </span><span class="self">self</span>.cast::&lt;()&gt;().align_offset(align) == <span class="number">0
+    </span>}
 }
 
 <span class="kw">impl</span>&lt;T&gt; <span class="kw-2">*mut </span>[T] {
@@ -4361,4 +4481,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

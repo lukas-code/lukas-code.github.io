@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/str/pattern.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pattern.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/str/pattern.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pattern.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1684,6 +1684,240 @@
 <span id="1684">1684</span>
 <span id="1685">1685</span>
 <span id="1686">1686</span>
+<span id="1687">1687</span>
+<span id="1688">1688</span>
+<span id="1689">1689</span>
+<span id="1690">1690</span>
+<span id="1691">1691</span>
+<span id="1692">1692</span>
+<span id="1693">1693</span>
+<span id="1694">1694</span>
+<span id="1695">1695</span>
+<span id="1696">1696</span>
+<span id="1697">1697</span>
+<span id="1698">1698</span>
+<span id="1699">1699</span>
+<span id="1700">1700</span>
+<span id="1701">1701</span>
+<span id="1702">1702</span>
+<span id="1703">1703</span>
+<span id="1704">1704</span>
+<span id="1705">1705</span>
+<span id="1706">1706</span>
+<span id="1707">1707</span>
+<span id="1708">1708</span>
+<span id="1709">1709</span>
+<span id="1710">1710</span>
+<span id="1711">1711</span>
+<span id="1712">1712</span>
+<span id="1713">1713</span>
+<span id="1714">1714</span>
+<span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
+<span id="1719">1719</span>
+<span id="1720">1720</span>
+<span id="1721">1721</span>
+<span id="1722">1722</span>
+<span id="1723">1723</span>
+<span id="1724">1724</span>
+<span id="1725">1725</span>
+<span id="1726">1726</span>
+<span id="1727">1727</span>
+<span id="1728">1728</span>
+<span id="1729">1729</span>
+<span id="1730">1730</span>
+<span id="1731">1731</span>
+<span id="1732">1732</span>
+<span id="1733">1733</span>
+<span id="1734">1734</span>
+<span id="1735">1735</span>
+<span id="1736">1736</span>
+<span id="1737">1737</span>
+<span id="1738">1738</span>
+<span id="1739">1739</span>
+<span id="1740">1740</span>
+<span id="1741">1741</span>
+<span id="1742">1742</span>
+<span id="1743">1743</span>
+<span id="1744">1744</span>
+<span id="1745">1745</span>
+<span id="1746">1746</span>
+<span id="1747">1747</span>
+<span id="1748">1748</span>
+<span id="1749">1749</span>
+<span id="1750">1750</span>
+<span id="1751">1751</span>
+<span id="1752">1752</span>
+<span id="1753">1753</span>
+<span id="1754">1754</span>
+<span id="1755">1755</span>
+<span id="1756">1756</span>
+<span id="1757">1757</span>
+<span id="1758">1758</span>
+<span id="1759">1759</span>
+<span id="1760">1760</span>
+<span id="1761">1761</span>
+<span id="1762">1762</span>
+<span id="1763">1763</span>
+<span id="1764">1764</span>
+<span id="1765">1765</span>
+<span id="1766">1766</span>
+<span id="1767">1767</span>
+<span id="1768">1768</span>
+<span id="1769">1769</span>
+<span id="1770">1770</span>
+<span id="1771">1771</span>
+<span id="1772">1772</span>
+<span id="1773">1773</span>
+<span id="1774">1774</span>
+<span id="1775">1775</span>
+<span id="1776">1776</span>
+<span id="1777">1777</span>
+<span id="1778">1778</span>
+<span id="1779">1779</span>
+<span id="1780">1780</span>
+<span id="1781">1781</span>
+<span id="1782">1782</span>
+<span id="1783">1783</span>
+<span id="1784">1784</span>
+<span id="1785">1785</span>
+<span id="1786">1786</span>
+<span id="1787">1787</span>
+<span id="1788">1788</span>
+<span id="1789">1789</span>
+<span id="1790">1790</span>
+<span id="1791">1791</span>
+<span id="1792">1792</span>
+<span id="1793">1793</span>
+<span id="1794">1794</span>
+<span id="1795">1795</span>
+<span id="1796">1796</span>
+<span id="1797">1797</span>
+<span id="1798">1798</span>
+<span id="1799">1799</span>
+<span id="1800">1800</span>
+<span id="1801">1801</span>
+<span id="1802">1802</span>
+<span id="1803">1803</span>
+<span id="1804">1804</span>
+<span id="1805">1805</span>
+<span id="1806">1806</span>
+<span id="1807">1807</span>
+<span id="1808">1808</span>
+<span id="1809">1809</span>
+<span id="1810">1810</span>
+<span id="1811">1811</span>
+<span id="1812">1812</span>
+<span id="1813">1813</span>
+<span id="1814">1814</span>
+<span id="1815">1815</span>
+<span id="1816">1816</span>
+<span id="1817">1817</span>
+<span id="1818">1818</span>
+<span id="1819">1819</span>
+<span id="1820">1820</span>
+<span id="1821">1821</span>
+<span id="1822">1822</span>
+<span id="1823">1823</span>
+<span id="1824">1824</span>
+<span id="1825">1825</span>
+<span id="1826">1826</span>
+<span id="1827">1827</span>
+<span id="1828">1828</span>
+<span id="1829">1829</span>
+<span id="1830">1830</span>
+<span id="1831">1831</span>
+<span id="1832">1832</span>
+<span id="1833">1833</span>
+<span id="1834">1834</span>
+<span id="1835">1835</span>
+<span id="1836">1836</span>
+<span id="1837">1837</span>
+<span id="1838">1838</span>
+<span id="1839">1839</span>
+<span id="1840">1840</span>
+<span id="1841">1841</span>
+<span id="1842">1842</span>
+<span id="1843">1843</span>
+<span id="1844">1844</span>
+<span id="1845">1845</span>
+<span id="1846">1846</span>
+<span id="1847">1847</span>
+<span id="1848">1848</span>
+<span id="1849">1849</span>
+<span id="1850">1850</span>
+<span id="1851">1851</span>
+<span id="1852">1852</span>
+<span id="1853">1853</span>
+<span id="1854">1854</span>
+<span id="1855">1855</span>
+<span id="1856">1856</span>
+<span id="1857">1857</span>
+<span id="1858">1858</span>
+<span id="1859">1859</span>
+<span id="1860">1860</span>
+<span id="1861">1861</span>
+<span id="1862">1862</span>
+<span id="1863">1863</span>
+<span id="1864">1864</span>
+<span id="1865">1865</span>
+<span id="1866">1866</span>
+<span id="1867">1867</span>
+<span id="1868">1868</span>
+<span id="1869">1869</span>
+<span id="1870">1870</span>
+<span id="1871">1871</span>
+<span id="1872">1872</span>
+<span id="1873">1873</span>
+<span id="1874">1874</span>
+<span id="1875">1875</span>
+<span id="1876">1876</span>
+<span id="1877">1877</span>
+<span id="1878">1878</span>
+<span id="1879">1879</span>
+<span id="1880">1880</span>
+<span id="1881">1881</span>
+<span id="1882">1882</span>
+<span id="1883">1883</span>
+<span id="1884">1884</span>
+<span id="1885">1885</span>
+<span id="1886">1886</span>
+<span id="1887">1887</span>
+<span id="1888">1888</span>
+<span id="1889">1889</span>
+<span id="1890">1890</span>
+<span id="1891">1891</span>
+<span id="1892">1892</span>
+<span id="1893">1893</span>
+<span id="1894">1894</span>
+<span id="1895">1895</span>
+<span id="1896">1896</span>
+<span id="1897">1897</span>
+<span id="1898">1898</span>
+<span id="1899">1899</span>
+<span id="1900">1900</span>
+<span id="1901">1901</span>
+<span id="1902">1902</span>
+<span id="1903">1903</span>
+<span id="1904">1904</span>
+<span id="1905">1905</span>
+<span id="1906">1906</span>
+<span id="1907">1907</span>
+<span id="1908">1908</span>
+<span id="1909">1909</span>
+<span id="1910">1910</span>
+<span id="1911">1911</span>
+<span id="1912">1912</span>
+<span id="1913">1913</span>
+<span id="1914">1914</span>
+<span id="1915">1915</span>
+<span id="1916">1916</span>
+<span id="1917">1917</span>
+<span id="1918">1918</span>
+<span id="1919">1919</span>
+<span id="1920">1920</span>
 </pre><pre class="rust"><code><span class="doccomment">//! The string Pattern API.
 //!
 //! The Pattern API provides a generic mechanism for using different pattern
@@ -1725,6 +1959,7 @@
 </span>)]
 
 </span><span class="kw">use </span><span class="kw">crate</span>::cmp;
+<span class="kw">use </span><span class="kw">crate</span>::cmp::Ordering;
 <span class="kw">use </span><span class="kw">crate</span>::fmt;
 <span class="kw">use </span><span class="kw">crate</span>::slice::memchr;
 
@@ -2632,6 +2867,32 @@
         haystack.as_bytes().starts_with(<span class="self">self</span>.as_bytes())
     }
 
+    <span class="doccomment">/// Checks whether the pattern matches anywhere in the haystack
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>is_contained_in(<span class="self">self</span>, haystack: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; bool {
+        <span class="kw">if </span><span class="self">self</span>.len() == <span class="number">0 </span>{
+            <span class="kw">return </span><span class="bool-val">true</span>;
+        }
+
+        <span class="kw">match </span><span class="self">self</span>.len().cmp(<span class="kw-2">&amp;</span>haystack.len()) {
+            Ordering::Less =&gt; {
+                <span class="kw">if </span><span class="self">self</span>.len() == <span class="number">1 </span>{
+                    <span class="kw">return </span>haystack.as_bytes().contains(<span class="kw-2">&amp;</span><span class="self">self</span>.as_bytes()[<span class="number">0</span>]);
+                }
+
+                <span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_feature = <span class="string">&quot;sse2&quot;</span>))]
+                </span><span class="kw">if </span><span class="self">self</span>.len() &lt;= <span class="number">32 </span>{
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(result) = simd_contains(<span class="self">self</span>, haystack) {
+                        <span class="kw">return </span>result;
+                    }
+                }
+
+                <span class="self">self</span>.into_searcher(haystack).next_match().is_some()
+            }
+            <span class="kw">_ </span>=&gt; <span class="self">self </span>== haystack,
+        }
+    }
+
     <span class="doccomment">/// Removes the pattern from the front of haystack, if it matches.
     </span><span class="attribute">#[inline]
     </span><span class="kw">fn </span>strip_prefix_of(<span class="self">self</span>, haystack: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; {
@@ -3370,5 +3631,212 @@
         SearchStep::Match(a, b)
     }
 }
+
+<span class="doccomment">/// SIMD search for short needles based on
+/// Wojciech Muła&#39;s &quot;SIMD-friendly algorithms for substring searching&quot;[0]
+///
+/// It skips ahead by the vector width on each iteration (rather than the needle length as two-way
+/// does) by probing the first and last byte of the needle for the whole vector width
+/// and only doing full needle comparisons when the vectorized probe indicated potential matches.
+///
+/// Since the x86_64 baseline only offers SSE2 we only use u8x16 here.
+/// If we ever ship std with for x86-64-v3 or adapt this for other platforms then wider vectors
+/// should be evaluated.
+///
+/// For haystacks smaller than vector-size + needle length it falls back to
+/// a naive O(n*m) search so this implementation should not be called on larger needles.
+///
+/// [0]: http://0x80.pl/articles/simd-strfind.html#sse-avx2
+</span><span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_feature = <span class="string">&quot;sse2&quot;</span>))]
+#[inline]
+</span><span class="kw">fn </span>simd_contains(needle: <span class="kw-2">&amp;</span>str, haystack: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+    <span class="kw">let </span>needle = needle.as_bytes();
+    <span class="kw">let </span>haystack = haystack.as_bytes();
+
+    <span class="macro">debug_assert!</span>(needle.len() &gt; <span class="number">1</span>);
+
+    <span class="kw">use </span><span class="kw">crate</span>::ops::BitAnd;
+    <span class="kw">use </span><span class="kw">crate</span>::simd::mask8x16 <span class="kw">as </span>Mask;
+    <span class="kw">use </span><span class="kw">crate</span>::simd::u8x16 <span class="kw">as </span>Block;
+    <span class="kw">use </span><span class="kw">crate</span>::simd::{SimdPartialEq, ToBitMask};
+
+    <span class="kw">let </span>first_probe = needle[<span class="number">0</span>];
+    <span class="kw">let </span>last_byte_offset = needle.len() - <span class="number">1</span>;
+
+    <span class="comment">// the offset used for the 2nd vector
+    </span><span class="kw">let </span>second_probe_offset = <span class="kw">if </span>needle.len() == <span class="number">2 </span>{
+        <span class="comment">// never bail out on len=2 needles because the probes will fully cover them and have
+        // no degenerate cases.
+        </span><span class="number">1
+    </span>} <span class="kw">else </span>{
+        <span class="comment">// try a few bytes in case first and last byte of the needle are the same
+        </span><span class="kw">let </span><span class="prelude-val">Some</span>(second_probe_offset) = (needle.len().saturating_sub(<span class="number">4</span>)..needle.len()).rfind(|<span class="kw-2">&amp;</span>idx| needle[idx] != first_probe) <span class="kw">else </span>{
+            <span class="comment">// fall back to other search methods if we can&#39;t find any different bytes
+            // since we could otherwise hit some degenerate cases
+            </span><span class="kw">return </span><span class="prelude-val">None</span>;
+        };
+        second_probe_offset
+    };
+
+    <span class="comment">// do a naive search if the haystack is too small to fit
+    </span><span class="kw">if </span>haystack.len() &lt; Block::LANES + last_byte_offset {
+        <span class="kw">return </span><span class="prelude-val">Some</span>(haystack.windows(needle.len()).any(|c| c == needle));
+    }
+
+    <span class="kw">let </span>first_probe: Block = Block::splat(first_probe);
+    <span class="kw">let </span>second_probe: Block = Block::splat(needle[second_probe_offset]);
+    <span class="comment">// first byte are already checked by the outer loop. to verify a match only the
+    // remainder has to be compared.
+    </span><span class="kw">let </span>trimmed_needle = <span class="kw-2">&amp;</span>needle[<span class="number">1</span>..];
+
+    <span class="comment">// this #[cold] is load-bearing, benchmark before removing it...
+    </span><span class="kw">let </span>check_mask = <span class="attribute">#[cold]
+    </span>|idx, mask: u16, skip: bool| -&gt; bool {
+        <span class="kw">if </span>skip {
+            <span class="kw">return </span><span class="bool-val">false</span>;
+        }
+
+        <span class="comment">// and so is this. optimizations are weird.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>mask = mask;
+
+        <span class="kw">while </span>mask != <span class="number">0 </span>{
+            <span class="kw">let </span>trailing = mask.trailing_zeros();
+            <span class="kw">let </span>offset = idx + trailing <span class="kw">as </span>usize + <span class="number">1</span>;
+            <span class="comment">// SAFETY: mask is between 0 and 15 trailing zeroes, we skip one additional byte that was already compared
+            // and then take trimmed_needle.len() bytes. This is within the bounds defined by the outer loop
+            </span><span class="kw">unsafe </span>{
+                <span class="kw">let </span>sub = haystack.get_unchecked(offset..).get_unchecked(..trimmed_needle.len());
+                <span class="kw">if </span>small_slice_eq(sub, trimmed_needle) {
+                    <span class="kw">return </span><span class="bool-val">true</span>;
+                }
+            }
+            mask &amp;= !(<span class="number">1 </span>&lt;&lt; trailing);
+        }
+        <span class="kw">return </span><span class="bool-val">false</span>;
+    };
+
+    <span class="kw">let </span>test_chunk = |idx| -&gt; u16 {
+        <span class="comment">// SAFETY: this requires at least LANES bytes being readable at idx
+        // that is ensured by the loop ranges (see comments below)
+        </span><span class="kw">let </span>a: Block = <span class="kw">unsafe </span>{ haystack.as_ptr().add(idx).cast::&lt;Block&gt;().read_unaligned() };
+        <span class="comment">// SAFETY: this requires LANES + block_offset bytes being readable at idx
+        </span><span class="kw">let </span>b: Block = <span class="kw">unsafe </span>{
+            haystack.as_ptr().add(idx).add(second_probe_offset).cast::&lt;Block&gt;().read_unaligned()
+        };
+        <span class="kw">let </span>eq_first: Mask = a.simd_eq(first_probe);
+        <span class="kw">let </span>eq_last: Mask = b.simd_eq(second_probe);
+        <span class="kw">let </span>both = eq_first.bitand(eq_last);
+        <span class="kw">let </span>mask = both.to_bitmask();
+
+        <span class="kw">return </span>mask;
+    };
+
+    <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">0</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>result = <span class="bool-val">false</span>;
+    <span class="comment">// The loop condition must ensure that there&#39;s enough headroom to read LANE bytes,
+    // and not only at the current index but also at the index shifted by block_offset
+    </span><span class="kw">const </span>UNROLL: usize = <span class="number">4</span>;
+    <span class="kw">while </span>i + last_byte_offset + UNROLL * Block::LANES &lt; haystack.len() &amp;&amp; !result {
+        <span class="kw">let </span><span class="kw-2">mut </span>masks = [<span class="number">0u16</span>; UNROLL];
+        <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..UNROLL {
+            masks[j] = test_chunk(i + j * Block::LANES);
+        }
+        <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..UNROLL {
+            <span class="kw">let </span>mask = masks[j];
+            <span class="kw">if </span>mask != <span class="number">0 </span>{
+                result |= check_mask(i + j * Block::LANES, mask, result);
+            }
+        }
+        i += UNROLL * Block::LANES;
+    }
+    <span class="kw">while </span>i + last_byte_offset + Block::LANES &lt; haystack.len() &amp;&amp; !result {
+        <span class="kw">let </span>mask = test_chunk(i);
+        <span class="kw">if </span>mask != <span class="number">0 </span>{
+            result |= check_mask(i, mask, result);
+        }
+        i += Block::LANES;
+    }
+
+    <span class="comment">// Process the tail that didn&#39;t fit into LANES-sized steps.
+    // This simply repeats the same procedure but as right-aligned chunk instead
+    // of a left-aligned one. The last byte must be exactly flush with the string end so
+    // we don&#39;t miss a single byte or read out of bounds.
+    </span><span class="kw">let </span>i = haystack.len() - last_byte_offset - Block::LANES;
+    <span class="kw">let </span>mask = test_chunk(i);
+    <span class="kw">if </span>mask != <span class="number">0 </span>{
+        result |= check_mask(i, mask, result);
+    }
+
+    <span class="prelude-val">Some</span>(result)
+}
+
+<span class="doccomment">/// Compares short slices for equality.
+///
+/// It avoids a call to libc&#39;s memcmp which is faster on long slices
+/// due to SIMD optimizations but it incurs a function call overhead.
+///
+/// # Safety
+///
+/// Both slices must have the same length.
+</span><span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_feature = <span class="string">&quot;sse2&quot;</span>))] </span><span class="comment">// only called on x86
+</span><span class="attribute">#[inline]
+</span><span class="kw">unsafe fn </span>small_slice_eq(x: <span class="kw-2">&amp;</span>[u8], y: <span class="kw-2">&amp;</span>[u8]) -&gt; bool {
+    <span class="macro">debug_assert_eq!</span>(x.len(), y.len());
+    <span class="comment">// This function is adapted from
+    // https://github.com/BurntSushi/memchr/blob/8037d11b4357b0f07be2bb66dc2659d9cf28ad32/src/memmem/util.rs#L32
+
+    // If we don&#39;t have enough bytes to do 4-byte at a time loads, then
+    // fall back to the naive slow version.
+    //
+    // Potential alternative: We could do a copy_nonoverlapping combined with a mask instead
+    // of a loop. Benchmark it.
+    </span><span class="kw">if </span>x.len() &lt; <span class="number">4 </span>{
+        <span class="kw">for </span>(<span class="kw-2">&amp;</span>b1, <span class="kw-2">&amp;</span>b2) <span class="kw">in </span>x.iter().zip(y) {
+            <span class="kw">if </span>b1 != b2 {
+                <span class="kw">return </span><span class="bool-val">false</span>;
+            }
+        }
+        <span class="kw">return </span><span class="bool-val">true</span>;
+    }
+    <span class="comment">// When we have 4 or more bytes to compare, then proceed in chunks of 4 at
+    // a time using unaligned loads.
+    //
+    // Also, why do 4 byte loads instead of, say, 8 byte loads? The reason is
+    // that this particular version of memcmp is likely to be called with tiny
+    // needles. That means that if we do 8 byte loads, then a higher proportion
+    // of memcmp calls will use the slower variant above. With that said, this
+    // is a hypothesis and is only loosely supported by benchmarks. There&#39;s
+    // likely some improvement that could be made here. The main thing here
+    // though is to optimize for latency, not throughput.
+
+    // SAFETY: Via the conditional above, we know that both `px` and `py`
+    // have the same length, so `px &lt; pxend` implies that `py &lt; pyend`.
+    // Thus, derefencing both `px` and `py` in the loop below is safe.
+    //
+    // Moreover, we set `pxend` and `pyend` to be 4 bytes before the actual
+    // end of of `px` and `py`. Thus, the final dereference outside of the
+    // loop is guaranteed to be valid. (The final comparison will overlap with
+    // the last comparison done in the loop for lengths that aren&#39;t multiples
+    // of four.)
+    //
+    // Finally, we needn&#39;t worry about alignment here, since we do unaligned
+    // loads.
+    </span><span class="kw">unsafe </span>{
+        <span class="kw">let </span>(<span class="kw-2">mut </span>px, <span class="kw-2">mut </span>py) = (x.as_ptr(), y.as_ptr());
+        <span class="kw">let </span>(pxend, pyend) = (px.add(x.len() - <span class="number">4</span>), py.add(y.len() - <span class="number">4</span>));
+        <span class="kw">while </span>px &lt; pxend {
+            <span class="kw">let </span>vx = (px <span class="kw">as </span><span class="kw-2">*const </span>u32).read_unaligned();
+            <span class="kw">let </span>vy = (py <span class="kw">as </span><span class="kw-2">*const </span>u32).read_unaligned();
+            <span class="kw">if </span>vx != vy {
+                <span class="kw">return </span><span class="bool-val">false</span>;
+            }
+            px = px.add(<span class="number">4</span>);
+            py = py.add(<span class="number">4</span>);
+        }
+        <span class="kw">let </span>vx = (pxend <span class="kw">as </span><span class="kw-2">*const </span>u32).read_unaligned();
+        <span class="kw">let </span>vy = (pyend <span class="kw">as </span><span class="kw-2">*const </span>u32).read_unaligned();
+        vx == vy
+    }
+}
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

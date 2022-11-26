@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.66.0.css"><link rel="stylesheet" href="../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.66.0.js"></script><script defer src="../../source-script1.66.0.js"></script><script defer src="../../source-files1.66.0.js"></script><script defer src="../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.67.0.css"><link rel="stylesheet" href="../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.67.0.js"></script><script defer src="../../source-script1.67.0.js"></script><script defer src="../../source-files1.67.0.js"></script><script defer src="../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -2169,6 +2169,17 @@
 <span id="2169">2169</span>
 <span id="2170">2170</span>
 <span id="2171">2171</span>
+<span id="2172">2172</span>
+<span id="2173">2173</span>
+<span id="2174">2174</span>
+<span id="2175">2175</span>
+<span id="2176">2176</span>
+<span id="2177">2177</span>
+<span id="2178">2178</span>
+<span id="2179">2179</span>
+<span id="2180">2180</span>
+<span id="2181">2181</span>
+<span id="2182">2182</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Shareable mutable containers.
 //!
 //! Rust memory safety is based on this rule: Given an object `T`, it is only possible to
@@ -3987,6 +3998,8 @@
 ///
 /// [`.get_mut()`]: `UnsafeCell::get_mut`
 ///
+/// # Memory layout
+///
 /// `UnsafeCell&lt;T&gt;` has the same in-memory representation as its inner type `T`. A consequence
 /// of this guarantee is that it is possible to convert between `T` and `UnsafeCell&lt;T&gt;`.
 /// Special care has to be taken when converting a nested `T` inside of an `Outer&lt;T&gt;` type
@@ -3996,35 +4009,44 @@
 /// Therefore this is not a valid conversion, despite `NonNull&lt;u8&gt;` and `UnsafeCell&lt;NonNull&lt;u8&gt;&gt;&gt;`
 /// having the same memory layout. This is because `UnsafeCell` disables niche optimizations in
 /// order to avoid its interior mutability property from spreading from `T` into the `Outer` type,
-/// thus this can cause distortions in the type size in these cases. Furthermore, it is only valid
-/// to obtain a `*mut T` pointer to the contents of a _shared_ `UnsafeCell&lt;T&gt;` through [`.get()`]
-/// or [`.raw_get()`]. A `&amp;mut T` reference can be obtained by either dereferencing this pointer or
-/// by calling [`.get_mut()`] on an _exclusive_ `UnsafeCell&lt;T&gt;`, e.g.:
+/// thus this can cause distortions in the type size in these cases.
+///
+/// Note that the only valid way to obtain a `*mut T` pointer to the contents of a
+/// _shared_ `UnsafeCell&lt;T&gt;` is through [`.get()`]  or [`.raw_get()`]. A `&amp;mut T` reference
+/// can be obtained by either dereferencing this pointer or by calling [`.get_mut()`]
+/// on an _exclusive_ `UnsafeCell&lt;T&gt;`. Even though `T` and `UnsafeCell&lt;T&gt;` have the
+/// same memory layout, the following is not allowed and undefined behavior:
+///
+/// ```rust,no_run
+/// # use std::cell::UnsafeCell;
+/// unsafe fn not_allowed&lt;T&gt;(ptr: &amp;UnsafeCell&lt;T&gt;) -&gt; &amp;mut T {
+///   let t = ptr as *const UnsafeCell&lt;T&gt; as *mut T;
+///   // This is undefined behavior, because the `*mut T` pointer
+///   // was not obtained through `.get()` nor `.raw_get()`:
+///   unsafe { &amp;mut *t }
+/// }
+/// ```
+///
+/// Instead, do this:
 ///
 /// ```rust
-/// use std::cell::UnsafeCell;
+/// # use std::cell::UnsafeCell;
+/// // Safety: the caller must ensure that there are no references that
+/// // point to the *contents* of the `UnsafeCell`.
+/// unsafe fn get_mut&lt;T&gt;(ptr: &amp;UnsafeCell&lt;T&gt;) -&gt; &amp;mut T {
+///   unsafe { &amp;mut *ptr.get() }
+/// }
+/// ```
 ///
-/// let mut x: UnsafeCell&lt;u32&gt; = UnsafeCell::new(5);
-/// let shared: &amp;UnsafeCell&lt;u32&gt; = &amp;x;
-/// // using `.get()` is okay:
-/// unsafe {
-///     // SAFETY: there exist no other references to the contents of `x`
-///     let exclusive: &amp;mut u32 = &amp;mut *shared.get();
-/// };
-/// // using `.raw_get()` is also okay:
-/// unsafe {
-///     // SAFETY: there exist no other references to the contents of `x` in this scope
-///     let exclusive: &amp;mut u32 = &amp;mut *UnsafeCell::raw_get(shared as *const _);
-/// };
-/// // using `.get_mut()` is always safe:
-/// let exclusive: &amp;mut u32 = x.get_mut();
+/// Converting in the other direction from a `&amp;mut T`
+/// to an `&amp;UnsafeCell&lt;T&gt;` is allowed:
 ///
-/// // when we have exclusive access, we can convert it to a shared `&amp;UnsafeCell`:
-/// unsafe {
-///     // SAFETY: `u32` has no niche, therefore it has the same layout as `UnsafeCell&lt;u32&gt;`
-///     let shared: &amp;UnsafeCell&lt;u32&gt; = &amp;*(exclusive as *mut _ as *const UnsafeCell&lt;u32&gt;);
-///     // SAFETY: there exist no other *active* references to the contents of `x` in this scope
-///     let exclusive: &amp;mut u32 = &amp;mut *shared.get();
+/// ```rust
+/// # use std::cell::UnsafeCell;
+/// fn get_shared&lt;T&gt;(ptr: &amp;mut T) -&gt; &amp;UnsafeCell&lt;T&gt; {
+///   let t = ptr as *mut T as *const UnsafeCell&lt;T&gt;;
+///   // SAFETY: `T` and `UnsafeCell&lt;T&gt;` have the same memory layout
+///   unsafe { &amp;*t }
 /// }
 /// ```
 ///
@@ -4096,7 +4118,7 @@
     <span class="doccomment">/// Constructs a new instance of `UnsafeCell` which will wrap the specified
     /// value.
     ///
-    /// All access to the inner value through methods is `unsafe`.
+    /// All access to the inner value through `&amp;UnsafeCell&lt;T&gt;` requires `unsafe` code.
     ///
     /// # Examples
     ///
@@ -4341,4 +4363,4 @@
     <span class="kw">let _</span>: RefCell&lt;<span class="kw-2">&amp;</span><span class="kw">dyn </span>Send&gt; = d;
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

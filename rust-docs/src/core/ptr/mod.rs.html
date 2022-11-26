@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ptr/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/ptr/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -2066,6 +2066,17 @@
 <span id="2066">2066</span>
 <span id="2067">2067</span>
 <span id="2068">2068</span>
+<span id="2069">2069</span>
+<span id="2070">2070</span>
+<span id="2071">2071</span>
+<span id="2072">2072</span>
+<span id="2073">2073</span>
+<span id="2074">2074</span>
+<span id="2075">2075</span>
+<span id="2076">2076</span>
+<span id="2077">2077</span>
+<span id="2078">2078</span>
+<span id="2079">2079</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Manually manage memory through raw pointers.
 //!
 //! *[See also the pointer primitive types](pointer).*
@@ -2103,7 +2114,8 @@
 //!   be used for inter-thread synchronization.
 //! * The result of casting a reference to a pointer is valid for as long as the
 //!   underlying object is live and no reference (just raw pointers) is used to
-//!   access the same memory.
+//!   access the same memory. That is, reference and pointer accesses cannot be
+//!   interleaved.
 //!
 //! These axioms, along with careful use of [`offset`] for pointer arithmetic,
 //! are enough to correctly implement many useful things in unsafe code. Stronger guarantees
@@ -2131,7 +2143,6 @@
 //! Common examples of allocated objects include stack-allocated variables (each variable is a
 //! separate allocated object), heap allocations (each allocation created by the global allocator is
 //! a separate allocated object), and `static` variables.
-//!
 //!
 //! # Strict Provenance
 //!
@@ -2462,7 +2473,6 @@
 </span><span class="kw">pub use </span><span class="kw">crate</span>::intrinsics::write_bytes;
 
 <span class="kw">mod </span>metadata;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>metadata::PtrRepr;
 <span class="attribute">#[unstable(feature = <span class="string">&quot;ptr_metadata&quot;</span>, issue = <span class="string">&quot;81513&quot;</span>)]
 </span><span class="kw">pub use </span>metadata::{from_raw_parts, from_raw_parts_mut, metadata, DynMetadata, Pointee, Thin};
 
@@ -2650,12 +2660,21 @@
 <span class="doccomment">/// Convert an address back to a pointer, picking up a previously &#39;exposed&#39; provenance.
 ///
 /// This is equivalent to `addr as *const T`. The provenance of the returned pointer is that of *any*
-/// pointer that was previously passed to [`expose_addr`][pointer::expose_addr] or a `ptr as usize`
-/// cast. If there is no previously &#39;exposed&#39; provenance that justifies the way this pointer will be
-/// used, the program has undefined behavior. Note that there is no algorithm that decides which
-/// provenance will be used. You can think of this as &quot;guessing&quot; the right provenance, and the guess
-/// will be &quot;maximally in your favor&quot;, in the sense that if there is any way to avoid undefined
-/// behavior, then that is the guess that will be taken.
+/// pointer that was previously exposed by passing it to [`expose_addr`][pointer::expose_addr],
+/// or a `ptr as usize` cast. In addition, memory which is outside the control of the Rust abstract
+/// machine (MMIO registers, for example) is always considered to be exposed, so long as this memory
+/// is disjoint from memory that will be used by the abstract machine such as the stack, heap,
+/// and statics.
+///
+/// If there is no &#39;exposed&#39; provenance that justifies the way this pointer will be used,
+/// the program has undefined behavior. In particular, the aliasing rules still apply: pointers
+/// and references that have been invalidated due to aliasing accesses cannot be used any more,
+/// even if they have been exposed!
+///
+/// Note that there is no algorithm that decides which provenance will be used. You can think of this
+/// as &quot;guessing&quot; the right provenance, and the guess will be &quot;maximally in your favor&quot;, in the sense
+/// that if there is any way to avoid undefined behavior (while upholding all aliasing requirements),
+/// then that is the guess that will be taken.
 ///
 /// On platforms with multiple address spaces, it is your responsibility to ensure that the
 /// address makes sense in the address space that this pointer will be used with.
@@ -2676,6 +2695,7 @@
 #[inline]
 #[unstable(feature = <span class="string">&quot;strict_provenance&quot;</span>, issue = <span class="string">&quot;95228&quot;</span>)]
 #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
+</span><span class="attribute">#[allow(fuzzy_provenance_casts)] </span><span class="comment">// this *is* the strict provenance API one should use instead
 </span><span class="kw">pub fn </span>from_exposed_addr&lt;T&gt;(addr: usize) -&gt; <span class="kw-2">*const </span>T
 <span class="kw">where
     </span>T: Sized,
@@ -2713,6 +2733,7 @@
 #[inline]
 #[unstable(feature = <span class="string">&quot;strict_provenance&quot;</span>, issue = <span class="string">&quot;95228&quot;</span>)]
 #[cfg_attr(miri, track_caller)] </span><span class="comment">// even without panics, this helps for Miri backtraces
+</span><span class="attribute">#[allow(fuzzy_provenance_casts)] </span><span class="comment">// this *is* the strict provenance API one should use instead
 </span><span class="kw">pub fn </span>from_exposed_addr_mut&lt;T&gt;(addr: usize) -&gt; <span class="kw-2">*mut </span>T
 <span class="kw">where
     </span>T: Sized,
@@ -2958,28 +2979,25 @@
     <span class="comment">// SAFETY: the caller must guarantee that `x` and `y` are
     // valid for writes and properly aligned.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](x: <span class="kw-2">*mut </span>T, y: <span class="kw-2">*mut </span>T, count: usize) =&gt;
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::swap_nonoverlapping requires that both pointer arguments are aligned and non-null \
+            and the specified memory ranges do not overlap&quot;</span>,
+            [T](x: <span class="kw-2">*mut </span>T, y: <span class="kw-2">*mut </span>T, count: usize) =&gt;
             is_aligned_and_not_null(x)
                 &amp;&amp; is_aligned_and_not_null(y)
                 &amp;&amp; is_nonoverlapping(x, y, count)
         );
     }
 
-    <span class="comment">// NOTE(scottmcm) Miri is disabled here as reading in smaller units is a
-    // pessimization for it.  Also, if the type contains any unaligned pointers,
-    // copying those over multiple reads is difficult to support.
-    </span><span class="attribute">#[cfg(not(miri))]
-    </span>{
-        <span class="comment">// Split up the slice into small power-of-two-sized chunks that LLVM is able
-        // to vectorize (unless it&#39;s a special type with more-than-pointer alignment,
-        // because we don&#39;t want to pessimize things like slices of SIMD vectors.)
-        </span><span class="kw">if </span>mem::align_of::&lt;T&gt;() &lt;= mem::size_of::&lt;usize&gt;()
-            &amp;&amp; (!mem::size_of::&lt;T&gt;().is_power_of_two()
-                || mem::size_of::&lt;T&gt;() &gt; mem::size_of::&lt;usize&gt;() * <span class="number">2</span>)
-        {
-            <span class="macro">attempt_swap_as_chunks!</span>(usize);
-            <span class="macro">attempt_swap_as_chunks!</span>(u8);
-        }
+    <span class="comment">// Split up the slice into small power-of-two-sized chunks that LLVM is able
+    // to vectorize (unless it&#39;s a special type with more-than-pointer alignment,
+    // because we don&#39;t want to pessimize things like slices of SIMD vectors.)
+    </span><span class="kw">if </span>mem::align_of::&lt;T&gt;() &lt;= mem::size_of::&lt;usize&gt;()
+        &amp;&amp; (!mem::size_of::&lt;T&gt;().is_power_of_two()
+            || mem::size_of::&lt;T&gt;() &gt; mem::size_of::&lt;usize&gt;() * <span class="number">2</span>)
+    {
+        <span class="macro">attempt_swap_as_chunks!</span>(usize);
+        <span class="macro">attempt_swap_as_chunks!</span>(u8);
     }
 
     <span class="comment">// SAFETY: Same preconditions as this function
@@ -3055,7 +3073,10 @@
     // and cannot overlap `src` since `dst` must point to a distinct
     // allocated object.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst));
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::replace requires that the pointer argument is aligned and non-null&quot;</span>,
+            [T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst)
+        );
         mem::swap(<span class="kw-2">&amp;mut *</span>dst, <span class="kw-2">&amp;mut </span>src); <span class="comment">// cannot overlap
     </span>}
     src
@@ -3186,7 +3207,10 @@
     // Also, since we just wrote a valid value into `tmp`, it is guaranteed
     // to be properly initialized.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](src: <span class="kw-2">*const </span>T) =&gt; is_aligned_and_not_null(src));
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::read requires that the pointer argument is aligned and non-null&quot;</span>,
+            [T](src: <span class="kw-2">*const </span>T) =&gt; is_aligned_and_not_null(src)
+        );
         copy_nonoverlapping(src, tmp.as_mut_ptr(), <span class="number">1</span>);
         tmp.assume_init()
     }
@@ -3380,7 +3404,10 @@
     // `dst` cannot overlap `src` because the caller has mutable access
     // to `dst` while `src` is owned by this function.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst));
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::write requires that the pointer argument is aligned and non-null&quot;</span>,
+            [T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst)
+        );
         copy_nonoverlapping(<span class="kw-2">&amp;</span>src <span class="kw">as </span><span class="kw-2">*const </span>T, dst, <span class="number">1</span>);
         intrinsics::forget(src);
     }
@@ -3544,7 +3571,10 @@
 </span><span class="kw">pub unsafe fn </span>read_volatile&lt;T&gt;(src: <span class="kw-2">*const </span>T) -&gt; T {
     <span class="comment">// SAFETY: the caller must uphold the safety contract for `volatile_load`.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](src: <span class="kw-2">*const </span>T) =&gt; is_aligned_and_not_null(src));
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::read_volatile requires that the pointer argument is aligned and non-null&quot;</span>,
+            [T](src: <span class="kw-2">*const </span>T) =&gt; is_aligned_and_not_null(src)
+        );
         intrinsics::volatile_load(src)
     }
 }
@@ -3615,7 +3645,10 @@
 </span><span class="kw">pub unsafe fn </span>write_volatile&lt;T&gt;(dst: <span class="kw-2">*mut </span>T, src: T) {
     <span class="comment">// SAFETY: the caller must uphold the safety contract for `volatile_store`.
     </span><span class="kw">unsafe </span>{
-        <span class="macro">assert_unsafe_precondition!</span>([T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst));
+        <span class="macro">assert_unsafe_precondition!</span>(
+            <span class="string">&quot;ptr::write_volatile requires that the pointer argument is aligned and non-null&quot;</span>,
+            [T](dst: <span class="kw-2">*mut </span>T) =&gt; is_aligned_and_not_null(dst)
+        );
         intrinsics::volatile_store(dst, src);
     }
 }
@@ -3639,13 +3672,12 @@
 ///
 /// Any questions go to @nagisa.
 </span><span class="attribute">#[lang = <span class="string">&quot;align_offset&quot;</span>]
-#[rustc_do_not_const_check] </span><span class="comment">// hooked by const-eval
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const unsafe fn </span>align_offset&lt;T: Sized&gt;(p: <span class="kw-2">*const </span>T, a: usize) -&gt; usize {
     <span class="comment">// FIXME(#75598): Direct use of these intrinsics improves codegen significantly at opt-level &lt;=
     // 1, where the method versions of these operations are not inlined.
     </span><span class="kw">use </span>intrinsics::{
-        cttz_nonzero, exact_div, unchecked_rem, unchecked_shl, unchecked_shr, unchecked_sub,
-        wrapping_add, wrapping_mul, wrapping_sub,
+        cttz_nonzero, exact_div, mul_with_overflow, unchecked_rem, unchecked_shl, unchecked_shr,
+        unchecked_sub, wrapping_add, wrapping_mul, wrapping_sub,
     };
 
     <span class="doccomment">/// Calculate multiplicative modular inverse of `x` modulo `m`.
@@ -3665,40 +3697,47 @@
         </span><span class="kw">const </span>INV_TABLE_MOD_16: [u8; <span class="number">8</span>] = [<span class="number">1</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">15</span>];
         <span class="doccomment">/// Modulo for which the `INV_TABLE_MOD_16` is intended.
         </span><span class="kw">const </span>INV_TABLE_MOD: usize = <span class="number">16</span>;
-        <span class="doccomment">/// INV_TABLE_MOD²
-        </span><span class="kw">const </span>INV_TABLE_MOD_SQUARED: usize = INV_TABLE_MOD * INV_TABLE_MOD;
 
-        <span class="kw">let </span>table_inverse = INV_TABLE_MOD_16[(x &amp; (INV_TABLE_MOD - <span class="number">1</span>)) &gt;&gt; <span class="number">1</span>] <span class="kw">as </span>usize;
         <span class="comment">// SAFETY: `m` is required to be a power-of-two, hence non-zero.
         </span><span class="kw">let </span>m_minus_one = <span class="kw">unsafe </span>{ unchecked_sub(m, <span class="number">1</span>) };
-        <span class="kw">if </span>m &lt;= INV_TABLE_MOD {
-            table_inverse &amp; m_minus_one
-        } <span class="kw">else </span>{
-            <span class="comment">// We iterate &quot;up&quot; using the following formula:
+        <span class="kw">let </span><span class="kw-2">mut </span>inverse = INV_TABLE_MOD_16[(x &amp; (INV_TABLE_MOD - <span class="number">1</span>)) &gt;&gt; <span class="number">1</span>] <span class="kw">as </span>usize;
+        <span class="kw">let </span><span class="kw-2">mut </span>mod_gate = INV_TABLE_MOD;
+        <span class="comment">// We iterate &quot;up&quot; using the following formula:
+        //
+        // $$ xy ≡ 1 (mod 2ⁿ) → xy (2 - xy) ≡ 1 (mod 2²ⁿ) $$
+        //
+        // This application needs to be applied at least until `2²ⁿ ≥ m`, at which point we can
+        // finally reduce the computation to our desired `m` by taking `inverse mod m`.
+        //
+        // This computation is `O(log log m)`, which is to say, that on 64-bit machines this loop
+        // will always finish in at most 4 iterations.
+        </span><span class="kw">loop </span>{
+            <span class="comment">// y = y * (2 - xy) mod n
             //
-            // $$ xy ≡ 1 (mod 2ⁿ) → xy (2 - xy) ≡ 1 (mod 2²ⁿ) $$
-            //
-            // until 2²ⁿ ≥ m. Then we can reduce to our desired `m` by taking the result `mod m`.
-            </span><span class="kw">let </span><span class="kw-2">mut </span>inverse = table_inverse;
-            <span class="kw">let </span><span class="kw-2">mut </span>going_mod = INV_TABLE_MOD_SQUARED;
-            <span class="kw">loop </span>{
-                <span class="comment">// y = y * (2 - xy) mod n
-                //
-                // Note, that we use wrapping operations here intentionally – the original formula
-                // uses e.g., subtraction `mod n`. It is entirely fine to do them `mod
-                // usize::MAX` instead, because we take the result `mod n` at the end
-                // anyway.
-                </span>inverse = wrapping_mul(inverse, wrapping_sub(<span class="number">2usize</span>, wrapping_mul(x, inverse)));
-                <span class="kw">if </span>going_mod &gt;= m {
-                    <span class="kw">return </span>inverse &amp; m_minus_one;
-                }
-                going_mod = wrapping_mul(going_mod, going_mod);
+            // Note, that we use wrapping operations here intentionally – the original formula
+            // uses e.g., subtraction `mod n`. It is entirely fine to do them `mod
+            // usize::MAX` instead, because we take the result `mod n` at the end
+            // anyway.
+            </span><span class="kw">if </span>mod_gate &gt;= m {
+                <span class="kw">break</span>;
             }
+            inverse = wrapping_mul(inverse, wrapping_sub(<span class="number">2usize</span>, wrapping_mul(x, inverse)));
+            <span class="kw">let </span>(new_gate, overflow) = mul_with_overflow(mod_gate, mod_gate);
+            <span class="kw">if </span>overflow {
+                <span class="kw">break</span>;
+            }
+            mod_gate = new_gate;
         }
+        inverse &amp; m_minus_one
     }
 
-    <span class="kw">let </span>addr = p.addr();
     <span class="kw">let </span>stride = mem::size_of::&lt;T&gt;();
+
+    <span class="comment">// SAFETY: This is just an inlined `p.addr()` (which is not
+    // a `const fn` so we cannot call it).
+    // During const eval, we hook this function to ensure that the pointer never
+    // has provenance, making this sound.
+    </span><span class="kw">let </span>addr: usize = <span class="kw">unsafe </span>{ mem::transmute(p) };
 
     <span class="comment">// SAFETY: `a` is a power-of-two, therefore non-zero.
     </span><span class="kw">let </span>a_minus_one = <span class="kw">unsafe </span>{ unchecked_sub(a, <span class="number">1</span>) };
@@ -3808,6 +3847,12 @@
 /// by their address rather than comparing the values they point to
 /// (which is what the `PartialEq for &amp;T` implementation does).
 ///
+/// When comparing wide pointers, both the address and the metadata are tested for equality.
+/// However, note that comparing trait object pointers (`*const dyn Trait`) is unrealiable: pointers
+/// to values of the same underlying type can compare inequal (because vtables are duplicated in
+/// multiple codegen units), and pointers to values of *different* underlying type can compare equal
+/// (since identical vtables can be deduplicated within a codegen unit).
+///
 /// # Examples
 ///
 /// ```
@@ -3833,41 +3878,6 @@
 /// assert!(std::ptr::eq(&amp;a[..3], &amp;a[..3]));
 /// assert!(!std::ptr::eq(&amp;a[..2], &amp;a[..3]));
 /// assert!(!std::ptr::eq(&amp;a[0..2], &amp;a[1..3]));
-/// ```
-///
-/// Traits are also compared by their implementation:
-///
-/// ```
-/// #[repr(transparent)]
-/// struct Wrapper { member: i32 }
-///
-/// trait Trait {}
-/// impl Trait for Wrapper {}
-/// impl Trait for i32 {}
-///
-/// let wrapper = Wrapper { member: 10 };
-///
-/// // Pointers have equal addresses.
-/// assert!(std::ptr::eq(
-///     &amp;wrapper as *const Wrapper as *const u8,
-///     &amp;wrapper.member as *const i32 as *const u8
-/// ));
-///
-/// // Objects have equal addresses, but `Trait` has different implementations.
-/// assert!(!std::ptr::eq(
-///     &amp;wrapper as &amp;dyn Trait,
-///     &amp;wrapper.member as &amp;dyn Trait,
-/// ));
-/// assert!(!std::ptr::eq(
-///     &amp;wrapper as &amp;dyn Trait as *const dyn Trait,
-///     &amp;wrapper.member as &amp;dyn Trait as *const dyn Trait,
-/// ));
-///
-/// // Converting the reference to a `*const u8` compares by address.
-/// assert!(std::ptr::eq(
-///     &amp;wrapper as &amp;dyn Trait as *const dyn Trait as *const u8,
-///     &amp;wrapper.member as &amp;dyn Trait as *const dyn Trait as *const u8,
-/// ));
 /// ```
 </span><span class="attribute">#[stable(feature = <span class="string">&quot;ptr_eq&quot;</span>, since = <span class="string">&quot;1.17.0&quot;</span>)]
 #[inline]
@@ -3936,9 +3946,15 @@
 // Impls for function pointers
 </span><span class="macro">macro_rules! </span>fnptr_impls_safety_abi {
     (<span class="macro-nonterminal">$FnTy</span>: ty, $(<span class="macro-nonterminal">$Arg</span>: ident),<span class="kw-2">*</span>) =&gt; {
+        <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)] </span><span class="macro-nonterminal">$FnTy</span>, $(<span class="macro-nonterminal">$Arg</span>),* }
+    };
+    (@c_unwind <span class="macro-nonterminal">$FnTy</span>: ty, $(<span class="macro-nonterminal">$Arg</span>: ident),<span class="kw-2">*</span>) =&gt; {
+        <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="attribute">#[unstable(feature = <span class="string">&quot;c_unwind&quot;</span>, issue = <span class="string">&quot;74990&quot;</span>)] </span><span class="macro-nonterminal">$FnTy</span>, $(<span class="macro-nonterminal">$Arg</span>),* }
+    };
+    (<span class="attribute">#[<span class="macro-nonterminal">$meta</span>:meta] </span><span class="macro-nonterminal">$FnTy</span>: ty, $(<span class="macro-nonterminal">$Arg</span>: ident),<span class="kw-2">*</span>) =&gt; {
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; PartialEq <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="attribute">#[inline]
                 </span><span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
@@ -3949,13 +3965,13 @@
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; Eq <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{}
         }
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; PartialOrd <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="attribute">#[inline]
                 </span><span class="kw">fn </span>partial_cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Ordering&gt; {
@@ -3966,7 +3982,7 @@
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; Ord <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="attribute">#[inline]
                 </span><span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; Ordering {
@@ -3977,7 +3993,7 @@
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; hash::Hash <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="kw">fn </span>hash&lt;HH: hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>HH) {
                     state.write_usize(<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize)
@@ -3987,7 +4003,7 @@
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; fmt::Pointer <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
                     fmt::pointer_fmt_inner(<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize, f)
@@ -3997,7 +4013,7 @@
 
         <span class="macro">maybe_fnptr_doc! </span>{
             $(<span class="macro-nonterminal">$Arg</span>)* @
-            <span class="attribute">#[stable(feature = <span class="string">&quot;fnptr_impls&quot;</span>, since = <span class="string">&quot;1.4.0&quot;</span>)]
+            <span class="attribute">#[<span class="macro-nonterminal">$meta</span>]
             </span><span class="kw">impl</span>&lt;Ret, $(<span class="macro-nonterminal">$Arg</span>),<span class="kw-2">*</span>&gt; fmt::Debug <span class="kw">for </span><span class="macro-nonterminal">$FnTy </span>{
                 <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
                     fmt::pointer_fmt_inner(<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize, f)
@@ -4012,16 +4028,22 @@
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">extern </span><span class="string">&quot;Rust&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+ , ...) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+ , ...) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">unsafe extern </span><span class="string">&quot;Rust&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+ , ...) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">unsafe extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">unsafe extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>($(<span class="macro-nonterminal">$Arg</span>),+ , ...) -&gt; Ret, $(<span class="macro-nonterminal">$Arg</span>),+ }
     };
     () =&gt; {
         <span class="comment">// No variadic functions with 0 parameters
         </span><span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">extern </span><span class="string">&quot;Rust&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">unsafe extern </span><span class="string">&quot;Rust&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
         <span class="macro">fnptr_impls_safety_abi! </span>{ <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
+        <span class="macro">fnptr_impls_safety_abi! </span>{ @c_unwind <span class="kw">unsafe extern </span><span class="string">&quot;C-unwind&quot; </span><span class="kw">fn</span>() -&gt; Ret, }
     };
 }
 
@@ -4135,4 +4157,4 @@
     <span class="kw-2">&amp;</span>raw <span class="kw-2">mut </span><span class="macro-nonterminal">$place
 </span>}
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

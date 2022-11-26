@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/macros/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/macros/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1553,6 +1553,19 @@
 <span id="1553">1553</span>
 <span id="1554">1554</span>
 <span id="1555">1555</span>
+<span id="1556">1556</span>
+<span id="1557">1557</span>
+<span id="1558">1558</span>
+<span id="1559">1559</span>
+<span id="1560">1560</span>
+<span id="1561">1561</span>
+<span id="1562">1562</span>
+<span id="1563">1563</span>
+<span id="1564">1564</span>
+<span id="1565">1565</span>
+<span id="1566">1566</span>
+<span id="1567">1567</span>
+<span id="1568">1568</span>
 </pre><pre class="rust"><code><span class="attribute">#[doc = <span class="macro">include_str!</span>(<span class="string">&quot;panic.md&quot;</span>)]
 #[macro_export]
 #[rustc_builtin_macro(core_panic)]
@@ -2375,7 +2388,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;compile_error_macro&quot;</span>, since = <span class="string">&quot;1.20.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;compile_error_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>compile_error {
         (<span class="macro-nonterminal">$msg</span>:expr $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
     }
@@ -2499,7 +2511,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;env_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>env {
         (<span class="macro-nonterminal">$name</span>:expr $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
         (<span class="macro-nonterminal">$name</span>:expr, <span class="macro-nonterminal">$error_msg</span>:expr $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
@@ -2528,7 +2539,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;option_env_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>option_env {
         (<span class="macro-nonterminal">$name</span>:expr $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
     }
@@ -2613,7 +2623,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;concat_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>concat {
         ($(<span class="macro-nonterminal">$e</span>:expr),* $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
     }
@@ -2639,7 +2648,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;line_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>line {
         () =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2679,7 +2687,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;column_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>column {
         () =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2705,7 +2712,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;file_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>file {
         () =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2730,7 +2736,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;stringify_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>stringify {
         ($(<span class="macro-nonterminal">$t</span>:tt)<span class="kw-2">*</span>) =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2837,7 +2842,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;module_path_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>module_path {
         () =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2871,7 +2875,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;cfg_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>cfg {
         ($(<span class="macro-nonterminal">$cfg</span>:tt)<span class="kw-2">*</span>) =&gt; {
             <span class="comment">/* compiler built-in */
@@ -2922,7 +2925,6 @@
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_builtin_macro]
     #[macro_export]
-    #[cfg_attr(not(test), rustc_diagnostic_item = <span class="string">&quot;include_macro&quot;</span>)]
     </span><span class="macro">macro_rules! </span>include {
         (<span class="macro-nonterminal">$file</span>:expr $(,)<span class="question-mark">?</span>) =&gt; {{ <span class="comment">/* compiler built-in */ </span>}};
     }
@@ -3019,6 +3021,19 @@
         <span class="comment">/* compiler built-in */
     </span>}
 
+    <span class="doccomment">/// Attribute macro used to apply derive macros for implementing traits
+    /// in a const context.
+    ///
+    /// See [the reference] for more info.
+    ///
+    /// [the reference]: ../../../reference/attributes/derive.html
+    </span><span class="attribute">#[unstable(feature = <span class="string">&quot;derive_const&quot;</span>, issue = <span class="string">&quot;none&quot;</span>)]
+    #[rustc_builtin_macro]
+    #[cfg(not(bootstrap))]
+    </span><span class="kw">pub macro </span>derive_const(<span class="macro-nonterminal">$item</span>:item) {
+        <span class="comment">/* compiler built-in */
+    </span>}
+
     <span class="doccomment">/// Attribute macro applied to a function to turn it into a unit test.
     ///
     /// See [the reference] for more info.
@@ -3066,6 +3081,17 @@
         <span class="comment">/* compiler built-in */
     </span>}
 
+    <span class="doccomment">/// Attribute macro applied to a function to register it as a handler for allocation failure.
+    ///
+    /// See also [`std::alloc::handle_alloc_error`](../../../std/alloc/fn.handle_alloc_error.html).
+    </span><span class="attribute">#[cfg(not(bootstrap))]
+    #[unstable(feature = <span class="string">&quot;alloc_error_handler&quot;</span>, issue = <span class="string">&quot;51540&quot;</span>)]
+    #[allow_internal_unstable(rustc_attrs)]
+    #[rustc_builtin_macro]
+    </span><span class="kw">pub macro </span>alloc_error_handler(<span class="macro-nonterminal">$item</span>:item) {
+        <span class="comment">/* compiler built-in */
+    </span>}
+
     <span class="doccomment">/// Keeps the item it&#39;s applied to if the passed path is accessible, and removes it otherwise.
     </span><span class="attribute">#[unstable(
         feature = <span class="string">&quot;cfg_accessible&quot;</span>,
@@ -3109,4 +3135,4 @@
     </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

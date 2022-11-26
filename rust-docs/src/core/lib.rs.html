@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.66.0.css"><link rel="stylesheet" href="../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.66.0.js"></script><script defer src="../../source-script1.66.0.js"></script><script defer src="../../source-files1.66.0.js"></script><script defer src="../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.67.0.css"><link rel="stylesheet" href="../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.67.0.js"></script><script defer src="../../source-script1.67.0.js"></script><script defer src="../../source-files1.67.0.js"></script><script defer src="../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -420,25 +420,6 @@
 <span id="420">420</span>
 <span id="421">421</span>
 <span id="422">422</span>
-<span id="423">423</span>
-<span id="424">424</span>
-<span id="425">425</span>
-<span id="426">426</span>
-<span id="427">427</span>
-<span id="428">428</span>
-<span id="429">429</span>
-<span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
-<span id="435">435</span>
-<span id="436">436</span>
-<span id="437">437</span>
-<span id="438">438</span>
-<span id="439">439</span>
-<span id="440">440</span>
-<span id="441">441</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # The Rust Core Library
 //!
 //! The Rust Core Library is the dependency-free[^free] foundation of [The
@@ -530,6 +511,7 @@
 // Lints:
 </span><span class="attribute">#![deny(rust_2021_incompatible_or_patterns)]
 #![deny(unsafe_op_in_unsafe_fn)]
+#![deny(fuzzy_provenance_casts)]
 #![warn(deprecated_in_future)]
 #![warn(missing_debug_implementations)]
 #![warn(missing_docs)]
@@ -539,13 +521,15 @@
 // Library features:
 </span><span class="attribute">#![feature(const_align_offset)]
 #![feature(const_align_of_val)]
+#![feature(const_align_of_val_raw)]
+#![feature(const_alloc_layout)]
 #![feature(const_arguments_as_str)]
 #![feature(const_array_into_iter_constructors)]
 #![feature(const_bigint_helper_methods)]
 #![feature(const_black_box)]
 #![feature(const_caller_location)]
 #![feature(const_cell_into_inner)]
-#![feature(const_char_convert)]
+#![feature(const_char_from_u32_unchecked)]
 #![feature(const_clone)]
 #![feature(const_cmp)]
 #![feature(const_discriminant)]
@@ -554,6 +538,7 @@
 #![feature(const_float_bits_conv)]
 #![feature(const_float_classify)]
 #![feature(const_fmt_arguments_new)]
+#![feature(const_hash)]
 #![feature(const_heap)]
 #![feature(const_convert)]
 #![feature(const_index_range_slice_index)]
@@ -573,12 +558,14 @@
 #![feature(const_pointer_is_aligned)]
 #![feature(const_ptr_sub_ptr)]
 #![feature(const_replace)]
+#![feature(const_result_drop)]
 #![feature(const_ptr_as_ref)]
 #![feature(const_ptr_is_null)]
 #![feature(const_ptr_read)]
 #![feature(const_ptr_write)]
 #![feature(const_raw_ptr_comparison)]
 #![feature(const_size_of_val)]
+#![feature(const_size_of_val_raw)]
 #![feature(const_slice_from_raw_parts_mut)]
 #![feature(const_slice_ptr_len)]
 #![feature(const_slice_split_at_mut)]
@@ -597,9 +584,11 @@
 #![feature(maybe_uninit_uninit_array)]
 #![feature(ptr_alignment_type)]
 #![feature(ptr_metadata)]
+#![feature(set_ptr_value)]
 #![feature(slice_ptr_get)]
 #![feature(slice_split_at_unchecked)]
 #![feature(str_internals)]
+#![feature(strict_provenance)]
 #![feature(utf16_extra)]
 #![feature(utf16_extra_const)]
 #![feature(variant_count)]
@@ -617,6 +606,7 @@
 #![feature(allow_internal_unstable)]
 #![feature(associated_type_bounds)]
 #![feature(auto_traits)]
+#![feature(c_unwind)]
 #![feature(cfg_sanitize)]
 #![feature(cfg_target_has_atomic)]
 #![feature(cfg_target_has_atomic_equal_alignment)]
@@ -626,6 +616,7 @@
 #![feature(const_refs_to_cell)]
 #![feature(decl_macro)]
 #![feature(deprecated_suggestion)]
+#![cfg_attr(not(bootstrap), feature(derive_const))]
 #![feature(doc_cfg)]
 #![feature(doc_notable_trait)]
 #![feature(rustdoc_internals)]
@@ -634,6 +625,7 @@
 #![feature(extern_types)]
 #![feature(fundamental)]
 #![feature(if_let_guard)]
+#![feature(inline_const)]
 #![feature(intra_doc_pointers)]
 #![feature(intrinsics)]
 #![feature(lang_items)]
@@ -827,38 +819,8 @@
 #[unstable(feature = <span class="string">&quot;stdsimd&quot;</span>, issue = <span class="string">&quot;48556&quot;</span>)]
 </span><span class="kw">mod </span>core_arch;
 
-<span class="attribute">#[doc = <span class="macro">include_str!</span>(<span class="string">&quot;../../stdarch/crates/core_arch/src/core_arch_docs.md&quot;</span>)]
-#[stable(feature = <span class="string">&quot;simd_arch&quot;</span>, since = <span class="string">&quot;1.27.0&quot;</span>)]
-</span><span class="kw">pub mod </span>arch {
-    <span class="attribute">#[stable(feature = <span class="string">&quot;simd_arch&quot;</span>, since = <span class="string">&quot;1.27.0&quot;</span>)]
-    </span><span class="kw">pub use </span><span class="kw">crate</span>::core_arch::arch::<span class="kw-2">*</span>;
-
-    <span class="doccomment">/// Inline assembly.
-    ///
-    /// Refer to [rust by example] for a usage guide and the [reference] for
-    /// detailed information about the syntax and available options.
-    ///
-    /// [rust by example]: https://doc.rust-lang.org/nightly/rust-by-example/unsafe/asm.html
-    /// [reference]: https://doc.rust-lang.org/nightly/reference/inline-assembly.html
-    </span><span class="attribute">#[stable(feature = <span class="string">&quot;asm&quot;</span>, since = <span class="string">&quot;1.59.0&quot;</span>)]
-    #[rustc_builtin_macro]
-    </span><span class="kw">pub macro </span>asm(<span class="string">&quot;assembly template&quot;</span>, $(operands,)* $(options($(option),<span class="kw-2">*</span>))<span class="question-mark">?</span>) {
-        <span class="comment">/* compiler built-in */
-    </span>}
-
-    <span class="doccomment">/// Module-level inline assembly.
-    ///
-    /// Refer to [rust by example] for a usage guide and the [reference] for
-    /// detailed information about the syntax and available options.
-    ///
-    /// [rust by example]: https://doc.rust-lang.org/nightly/rust-by-example/unsafe/asm.html
-    /// [reference]: https://doc.rust-lang.org/nightly/reference/inline-assembly.html
-    </span><span class="attribute">#[stable(feature = <span class="string">&quot;global_asm&quot;</span>, since = <span class="string">&quot;1.59.0&quot;</span>)]
-    #[rustc_builtin_macro]
-    </span><span class="kw">pub macro </span>global_asm(<span class="string">&quot;assembly template&quot;</span>, $(operands,)* $(options($(option),<span class="kw-2">*</span>))<span class="question-mark">?</span>) {
-        <span class="comment">/* compiler built-in */
-    </span>}
-}
+<span class="attribute">#[stable(feature = <span class="string">&quot;simd_arch&quot;</span>, since = <span class="string">&quot;1.27.0&quot;</span>)]
+</span><span class="kw">pub mod </span>arch;
 
 <span class="comment">// Pull in the `core_simd` crate directly into libcore. The contents of
 // `core_simd` are in a different repository: rust-lang/portable-simd.
@@ -881,4 +843,4 @@
 
 <span class="macro">include!</span>(<span class="string">&quot;primitive_docs.rs&quot;</span>);
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

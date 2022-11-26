@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/pin.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pin.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.66.0.css"><link rel="stylesheet" href="../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.66.0.js"></script><script defer src="../../source-script1.66.0.js"></script><script defer src="../../source-files1.66.0.js"></script><script defer src="../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/pin.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pin.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize1.67.0.css"><link rel="stylesheet" href="../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage1.67.0.js"></script><script defer src="../../source-script1.67.0.js"></script><script defer src="../../source-files1.67.0.js"></script><script defer src="../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../core/index.html"><img class="rust-logo" src="../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1157,6 +1157,59 @@
 <span id="1157">1157</span>
 <span id="1158">1158</span>
 <span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
+<span id="1168">1168</span>
+<span id="1169">1169</span>
+<span id="1170">1170</span>
+<span id="1171">1171</span>
+<span id="1172">1172</span>
+<span id="1173">1173</span>
+<span id="1174">1174</span>
+<span id="1175">1175</span>
+<span id="1176">1176</span>
+<span id="1177">1177</span>
+<span id="1178">1178</span>
+<span id="1179">1179</span>
+<span id="1180">1180</span>
+<span id="1181">1181</span>
+<span id="1182">1182</span>
+<span id="1183">1183</span>
+<span id="1184">1184</span>
+<span id="1185">1185</span>
+<span id="1186">1186</span>
+<span id="1187">1187</span>
+<span id="1188">1188</span>
+<span id="1189">1189</span>
+<span id="1190">1190</span>
+<span id="1191">1191</span>
+<span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types that pin data to its location in memory.
 //!
 //! It is sometimes useful to have objects that are guaranteed not to move,
@@ -1702,7 +1755,7 @@
     ///         let p: Pin&lt;&amp;mut T&gt; = Pin::new_unchecked(&amp;mut a);
     ///         // This should mean the pointee `a` can never move again.
     ///     }
-    ///     mem::swap(&amp;mut a, &amp;mut b);
+    ///     mem::swap(&amp;mut a, &amp;mut b); // Potential UB down the road ⚠️
     ///     // The address of `a` changed to `b`&#39;s stack slot, so `a` got moved even
     ///     // though we have previously pinned it! We have violated the pinning API contract.
     /// }
@@ -1722,12 +1775,65 @@
     ///         // This should mean the pointee can never move again.
     ///     }
     ///     drop(pinned);
-    ///     let content = Rc::get_mut(&amp;mut x).unwrap();
+    ///     let content = Rc::get_mut(&amp;mut x).unwrap(); // Potential UB down the road ⚠️
     ///     // Now, if `x` was the only reference, we have a mutable reference to
     ///     // data that we pinned above, which we could use to move it as we have
     ///     // seen in the previous example. We have violated the pinning API contract.
     ///  }
     ///  ```
+    ///
+    /// ## Pinning of closure captures
+    ///
+    /// Particular care is required when using `Pin::new_unchecked` in a closure:
+    /// `Pin::new_unchecked(&amp;mut var)` where `var` is a by-value (moved) closure capture
+    /// implicitly makes the promise that the closure itself is pinned, and that *all* uses
+    /// of this closure capture respect that pinning.
+    /// ```
+    /// use std::pin::Pin;
+    /// use std::task::Context;
+    /// use std::future::Future;
+    ///
+    /// fn move_pinned_closure(mut x: impl Future, cx: &amp;mut Context&lt;&#39;_&gt;) {
+    ///     // Create a closure that moves `x`, and then internally uses it in a pinned way.
+    ///     let mut closure = move || unsafe {
+    ///         let _ignore = Pin::new_unchecked(&amp;mut x).poll(cx);
+    ///     };
+    ///     // Call the closure, so the future can assume it has been pinned.
+    ///     closure();
+    ///     // Move the closure somewhere else. This also moves `x`!
+    ///     let mut moved = closure;
+    ///     // Calling it again means we polled the future from two different locations,
+    ///     // violating the pinning API contract.
+    ///     moved(); // Potential UB ⚠️
+    /// }
+    /// ```
+    /// When passing a closure to another API, it might be moving the closure any time, so
+    /// `Pin::new_unchecked` on closure captures may only be used if the API explicitly documents
+    /// that the closure is pinned.
+    ///
+    /// The better alternative is to avoid all that trouble and do the pinning in the outer function
+    /// instead (here using the unstable `pin` macro):
+    /// ```
+    /// #![feature(pin_macro)]
+    /// use std::pin::pin;
+    /// use std::task::Context;
+    /// use std::future::Future;
+    ///
+    /// fn move_pinned_closure(mut x: impl Future, cx: &amp;mut Context&lt;&#39;_&gt;) {
+    ///     let mut x = pin!(x);
+    ///     // Create a closure that captures `x: Pin&lt;&amp;mut _&gt;`, which is safe to move.
+    ///     let mut closure = move || {
+    ///         let _ignore = x.as_mut().poll(cx);
+    ///     };
+    ///     // Call the closure, so the future can assume it has been pinned.
+    ///     closure();
+    ///     // Move the closure somewhere else.
+    ///     let mut moved = closure;
+    ///     // Calling it again here is fine (except that we might be polling a future that already
+    ///     // returned `Poll::Ready`, but that is a separate problem).
+    ///     moved();
+    /// }
+    /// ```
     ///
     /// [`mem::swap`]: crate::mem::swap
     </span><span class="attribute">#[lang = <span class="string">&quot;new_unchecked&quot;</span>]
@@ -2218,7 +2324,7 @@
 /// 8  | let x: Pin&lt;&amp;mut Foo&gt; = {
 ///    |     - borrow later stored here
 /// 9  |     let x: Pin&lt;&amp;mut Foo&gt; = pin!(Foo { /* … */ });
-///    |                            ^^^^^^^^^^^^^^^^^^^^^ creates a temporary which is freed while still in use
+///    |                            ^^^^^^^^^^^^^^^^^^^^^ creates a temporary value which is freed while still in use
 /// 10 |     x
 /// 11 | }; // &lt;- Foo is dropped
 ///    | - temporary value is freed at the end of this statement
@@ -2317,4 +2423,4 @@
     </span><span class="macro-nonterminal">$crate::pin::Pin</span>::&lt;<span class="kw-2">&amp;mut </span><span class="kw">_</span>&gt; { pointer: <span class="kw-2">&amp;mut </span>{ <span class="macro-nonterminal">$value </span>} }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

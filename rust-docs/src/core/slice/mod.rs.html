@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/slice/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/slice/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -4298,6 +4298,148 @@
 <span id="4298">4298</span>
 <span id="4299">4299</span>
 <span id="4300">4300</span>
+<span id="4301">4301</span>
+<span id="4302">4302</span>
+<span id="4303">4303</span>
+<span id="4304">4304</span>
+<span id="4305">4305</span>
+<span id="4306">4306</span>
+<span id="4307">4307</span>
+<span id="4308">4308</span>
+<span id="4309">4309</span>
+<span id="4310">4310</span>
+<span id="4311">4311</span>
+<span id="4312">4312</span>
+<span id="4313">4313</span>
+<span id="4314">4314</span>
+<span id="4315">4315</span>
+<span id="4316">4316</span>
+<span id="4317">4317</span>
+<span id="4318">4318</span>
+<span id="4319">4319</span>
+<span id="4320">4320</span>
+<span id="4321">4321</span>
+<span id="4322">4322</span>
+<span id="4323">4323</span>
+<span id="4324">4324</span>
+<span id="4325">4325</span>
+<span id="4326">4326</span>
+<span id="4327">4327</span>
+<span id="4328">4328</span>
+<span id="4329">4329</span>
+<span id="4330">4330</span>
+<span id="4331">4331</span>
+<span id="4332">4332</span>
+<span id="4333">4333</span>
+<span id="4334">4334</span>
+<span id="4335">4335</span>
+<span id="4336">4336</span>
+<span id="4337">4337</span>
+<span id="4338">4338</span>
+<span id="4339">4339</span>
+<span id="4340">4340</span>
+<span id="4341">4341</span>
+<span id="4342">4342</span>
+<span id="4343">4343</span>
+<span id="4344">4344</span>
+<span id="4345">4345</span>
+<span id="4346">4346</span>
+<span id="4347">4347</span>
+<span id="4348">4348</span>
+<span id="4349">4349</span>
+<span id="4350">4350</span>
+<span id="4351">4351</span>
+<span id="4352">4352</span>
+<span id="4353">4353</span>
+<span id="4354">4354</span>
+<span id="4355">4355</span>
+<span id="4356">4356</span>
+<span id="4357">4357</span>
+<span id="4358">4358</span>
+<span id="4359">4359</span>
+<span id="4360">4360</span>
+<span id="4361">4361</span>
+<span id="4362">4362</span>
+<span id="4363">4363</span>
+<span id="4364">4364</span>
+<span id="4365">4365</span>
+<span id="4366">4366</span>
+<span id="4367">4367</span>
+<span id="4368">4368</span>
+<span id="4369">4369</span>
+<span id="4370">4370</span>
+<span id="4371">4371</span>
+<span id="4372">4372</span>
+<span id="4373">4373</span>
+<span id="4374">4374</span>
+<span id="4375">4375</span>
+<span id="4376">4376</span>
+<span id="4377">4377</span>
+<span id="4378">4378</span>
+<span id="4379">4379</span>
+<span id="4380">4380</span>
+<span id="4381">4381</span>
+<span id="4382">4382</span>
+<span id="4383">4383</span>
+<span id="4384">4384</span>
+<span id="4385">4385</span>
+<span id="4386">4386</span>
+<span id="4387">4387</span>
+<span id="4388">4388</span>
+<span id="4389">4389</span>
+<span id="4390">4390</span>
+<span id="4391">4391</span>
+<span id="4392">4392</span>
+<span id="4393">4393</span>
+<span id="4394">4394</span>
+<span id="4395">4395</span>
+<span id="4396">4396</span>
+<span id="4397">4397</span>
+<span id="4398">4398</span>
+<span id="4399">4399</span>
+<span id="4400">4400</span>
+<span id="4401">4401</span>
+<span id="4402">4402</span>
+<span id="4403">4403</span>
+<span id="4404">4404</span>
+<span id="4405">4405</span>
+<span id="4406">4406</span>
+<span id="4407">4407</span>
+<span id="4408">4408</span>
+<span id="4409">4409</span>
+<span id="4410">4410</span>
+<span id="4411">4411</span>
+<span id="4412">4412</span>
+<span id="4413">4413</span>
+<span id="4414">4414</span>
+<span id="4415">4415</span>
+<span id="4416">4416</span>
+<span id="4417">4417</span>
+<span id="4418">4418</span>
+<span id="4419">4419</span>
+<span id="4420">4420</span>
+<span id="4421">4421</span>
+<span id="4422">4422</span>
+<span id="4423">4423</span>
+<span id="4424">4424</span>
+<span id="4425">4425</span>
+<span id="4426">4426</span>
+<span id="4427">4427</span>
+<span id="4428">4428</span>
+<span id="4429">4429</span>
+<span id="4430">4430</span>
+<span id="4431">4431</span>
+<span id="4432">4432</span>
+<span id="4433">4433</span>
+<span id="4434">4434</span>
+<span id="4435">4435</span>
+<span id="4436">4436</span>
+<span id="4437">4437</span>
+<span id="4438">4438</span>
+<span id="4439">4439</span>
+<span id="4440">4440</span>
+<span id="4441">4441</span>
+<span id="4442">4442</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Slice management and manipulation.
 //!
 //! For more details see [`std::slice`].
@@ -4307,6 +4449,7 @@
 </span><span class="attribute">#![stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
 
 </span><span class="kw">use </span><span class="kw">crate</span>::cmp::Ordering::{<span class="self">self</span>, Greater, Less};
+<span class="kw">use </span><span class="kw">crate</span>::fmt;
 <span class="kw">use </span><span class="kw">crate</span>::intrinsics::{assert_unsafe_precondition, exact_div};
 <span class="kw">use </span><span class="kw">crate</span>::marker::Copy;
 <span class="kw">use </span><span class="kw">crate</span>::mem::{<span class="self">self</span>, SizedTypeProperties};
@@ -4423,18 +4566,11 @@
     </span><span class="attribute">#[lang = <span class="string">&quot;slice_len_fn&quot;</span>]
     #[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
     #[rustc_const_stable(feature = <span class="string">&quot;const_slice_len&quot;</span>, since = <span class="string">&quot;1.39.0&quot;</span>)]
+    #[rustc_allow_const_fn_unstable(ptr_metadata)]
     #[inline]
     #[must_use]
-    </span><span class="comment">// SAFETY: const sound because we transmute out the length field as a usize (which it must be)
     </span><span class="kw">pub const fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="comment">// FIXME: Replace with `crate::ptr::metadata(self)` when that is const-stable.
-        // As of this writing this causes a &quot;Const-stable functions can only call other
-        // const-stable functions&quot; error.
-
-        // SAFETY: Accessing the value from the `PtrRepr` union is safe since *const T
-        // and PtrComponents&lt;T&gt; have the same memory layouts. Only std can make this
-        // guarantee.
-        </span><span class="kw">unsafe </span>{ <span class="kw">crate</span>::ptr::PtrRepr { const_ptr: <span class="self">self </span>}.components.metadata }
+        ptr::metadata(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Returns `true` if the slice has a length of 0.
@@ -4960,7 +5096,10 @@
         <span class="kw">let </span>ptr = this.as_mut_ptr();
         <span class="comment">// SAFETY: caller has to guarantee that `a &lt; self.len()` and `b &lt; self.len()`
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](a: usize, b: usize, this: <span class="kw-2">&amp;mut </span>[T]) =&gt; a &lt; this.len() &amp;&amp; b &lt; this.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::swap_unchecked requires that the indices are within the slice&quot;</span>,
+                [T](a: usize, b: usize, this: <span class="kw-2">&amp;mut </span>[T]) =&gt; a &lt; this.len() &amp;&amp; b &lt; this.len()
+            );
             ptr::swap(ptr.add(a), ptr.add(b));
         }
     }
@@ -5276,7 +5415,10 @@
         <span class="kw">let </span>this = <span class="self">self</span>;
         <span class="comment">// SAFETY: Caller must guarantee that `N` is nonzero and exactly divides the slice length
         </span><span class="kw">let </span>new_len = <span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: <span class="kw-2">&amp;</span>[T], N: usize) =&gt; N != <span class="number">0 </span>&amp;&amp; this.len() % N == <span class="number">0</span>);
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::as_chunks_unchecked requires `N != 0` and the slice to split exactly into `N`-element chunks&quot;</span>,
+                [T](this: <span class="kw-2">&amp;</span>[T], N: usize) =&gt; N != <span class="number">0 </span>&amp;&amp; this.len() % N == <span class="number">0
+            </span>);
             exact_div(<span class="self">self</span>.len(), N)
         };
         <span class="comment">// SAFETY: We cast a slice of `new_len * N` elements into
@@ -5416,7 +5558,10 @@
         <span class="kw">let </span>this = <span class="kw-2">&amp;*</span><span class="self">self</span>;
         <span class="comment">// SAFETY: Caller must guarantee that `N` is nonzero and exactly divides the slice length
         </span><span class="kw">let </span>new_len = <span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: <span class="kw-2">&amp;</span>[T], N: usize) =&gt; N != <span class="number">0 </span>&amp;&amp; this.len() % N == <span class="number">0</span>);
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::as_chunks_unchecked_mut requires `N != 0` and the slice to split exactly into `N`-element chunks&quot;</span>,
+                [T](this: <span class="kw-2">&amp;</span>[T], N: usize) =&gt; N != <span class="number">0 </span>&amp;&amp; this.len() % N == <span class="number">0
+            </span>);
             exact_div(this.len(), N)
         };
         <span class="comment">// SAFETY: We cast a slice of `new_len * N` elements into
@@ -5992,7 +6137,10 @@
         // `[ptr; mid]` and `[mid; len]` are not overlapping, so returning a mutable reference
         // is fine.
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>((mid: usize, len: usize) =&gt; mid &lt;= len);
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::split_at_mut_unchecked requires the index to be within the slice&quot;</span>,
+                (mid: usize, len: usize) =&gt; mid &lt;= len
+            );
             (from_raw_parts_mut(ptr, mid), from_raw_parts_mut(ptr.add(mid), len - mid))
         }
     }
@@ -7819,8 +7967,8 @@
         }
     }
 
-    <span class="doccomment">/// Transmute the slice to a slice of another type, ensuring alignment of the types is
-    /// maintained.
+    <span class="doccomment">/// Transmute the mutable slice to a mutable slice of another type, ensuring alignment of the
+    /// types is maintained.
     ///
     /// This method splits the slice into three distinct slices: prefix, correctly aligned middle
     /// slice of a new type, and the suffix slice. The method may make the middle slice the greatest
@@ -7962,7 +8110,8 @@
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.align_to() }
     }
 
-    <span class="doccomment">/// Split a slice into a prefix, a middle of aligned SIMD types, and a suffix.
+    <span class="doccomment">/// Split a mutable slice into a mutable prefix, a middle of aligned SIMD types,
+    /// and a mutable suffix.
     ///
     /// This is a safe wrapper around [`slice::align_to_mut`], so has the same weak
     /// postconditions as that method.  You&#39;re only assured that
@@ -8046,9 +8195,9 @@
     /// [`is_sorted`]: slice::is_sorted
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;is_sorted&quot;</span>, reason = <span class="string">&quot;new API&quot;</span>, issue = <span class="string">&quot;53485&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>is_sorted_by&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut </span>compare: F) -&gt; bool
+    </span><span class="kw">pub fn </span>is_sorted_by&lt;<span class="lifetime">&#39;a</span>, F&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, <span class="kw-2">mut </span>compare: F) -&gt; bool
     <span class="kw">where
-        </span>F: FnMut(<span class="kw-2">&amp;</span>T, <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Option</span>&lt;Ordering&gt;,
+        </span>F: FnMut(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T) -&gt; <span class="prelude-ty">Option</span>&lt;Ordering&gt;,
     {
         <span class="self">self</span>.iter().is_sorted_by(|a, b| compare(<span class="kw-2">*</span>a, <span class="kw-2">*</span>b))
     }
@@ -8072,9 +8221,9 @@
     </span><span class="attribute">#[inline]
     #[unstable(feature = <span class="string">&quot;is_sorted&quot;</span>, reason = <span class="string">&quot;new API&quot;</span>, issue = <span class="string">&quot;53485&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>is_sorted_by_key&lt;F, K&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; bool
+    </span><span class="kw">pub fn </span>is_sorted_by_key&lt;<span class="lifetime">&#39;a</span>, F, K&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, f: F) -&gt; bool
     <span class="kw">where
-        </span>F: FnMut(<span class="kw-2">&amp;</span>T) -&gt; K,
+        </span>F: FnMut(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T) -&gt; K,
         K: PartialOrd,
     {
         <span class="self">self</span>.iter().is_sorted_by_key(f)
@@ -8376,6 +8525,88 @@
         <span class="kw-2">*</span><span class="self">self </span>= rem;
         <span class="prelude-val">Some</span>(last)
     }
+
+    <span class="doccomment">/// Returns mutable references to many indices at once, without doing any checks.
+    ///
+    /// For a safe alternative see [`get_many_mut`].
+    ///
+    /// # Safety
+    ///
+    /// Calling this method with overlapping or out-of-bounds indices is *[undefined behavior]*
+    /// even if the resulting references are not used.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// #![feature(get_many_mut)]
+    ///
+    /// let x = &amp;mut [1, 2, 4];
+    ///
+    /// unsafe {
+    ///     let [a, b] = x.get_many_unchecked_mut([0, 2]);
+    ///     *a *= 10;
+    ///     *b *= 100;
+    /// }
+    /// assert_eq!(x, &amp;[10, 2, 400]);
+    /// ```
+    ///
+    /// [`get_many_mut`]: slice::get_many_mut
+    /// [undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+    </span><span class="attribute">#[unstable(feature = <span class="string">&quot;get_many_mut&quot;</span>, issue = <span class="string">&quot;104642&quot;</span>)]
+    #[inline]
+    </span><span class="kw">pub unsafe fn </span>get_many_unchecked_mut&lt;<span class="kw">const </span>N: usize&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        indices: [usize; N],
+    ) -&gt; [<span class="kw-2">&amp;mut </span>T; N] {
+        <span class="comment">// NB: This implementation is written as it is because any variation of
+        // `indices.map(|i| self.get_unchecked_mut(i))` would make miri unhappy,
+        // or generate worse code otherwise. This is also why we need to go
+        // through a raw pointer here.
+        </span><span class="kw">let </span>slice: <span class="kw-2">*mut </span>[T] = <span class="self">self</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>arr: mem::MaybeUninit&lt;[<span class="kw-2">&amp;mut </span>T; N]&gt; = mem::MaybeUninit::uninit();
+        <span class="kw">let </span>arr_ptr = arr.as_mut_ptr();
+
+        <span class="comment">// SAFETY: We expect `indices` to contain disjunct values that are
+        // in bounds of `self`.
+        </span><span class="kw">unsafe </span>{
+            <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..N {
+                <span class="kw">let </span>idx = <span class="kw-2">*</span>indices.get_unchecked(i);
+                <span class="kw-2">*</span>(<span class="kw-2">*</span>arr_ptr).get_unchecked_mut(i) = <span class="kw-2">&amp;mut *</span>slice.get_unchecked_mut(idx);
+            }
+            arr.assume_init()
+        }
+    }
+
+    <span class="doccomment">/// Returns mutable references to many indices at once.
+    ///
+    /// Returns an error if any index is out-of-bounds, or if the same index was
+    /// passed more than once.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// #![feature(get_many_mut)]
+    ///
+    /// let v = &amp;mut [1, 2, 3];
+    /// if let Ok([a, b]) = v.get_many_mut([0, 2]) {
+    ///     *a = 413;
+    ///     *b = 612;
+    /// }
+    /// assert_eq!(v, &amp;[413, 2, 612]);
+    /// ```
+    </span><span class="attribute">#[unstable(feature = <span class="string">&quot;get_many_mut&quot;</span>, issue = <span class="string">&quot;104642&quot;</span>)]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_many_mut&lt;<span class="kw">const </span>N: usize&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        indices: [usize; N],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;[<span class="kw-2">&amp;mut </span>T; N], GetManyMutError&lt;N&gt;&gt; {
+        <span class="kw">if </span>!get_many_check_valid(<span class="kw-2">&amp;</span>indices, <span class="self">self</span>.len()) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(GetManyMutError { _private: () });
+        }
+        <span class="comment">// SAFETY: The `get_many_check_valid()` call checked that all indices
+        // are disjunct and in bounds.
+        </span><span class="kw">unsafe </span>{ <span class="prelude-val">Ok</span>(<span class="self">self</span>.get_many_unchecked_mut(indices)) }
+    }
 }
 
 <span class="kw">impl</span>&lt;T, <span class="kw">const </span>N: usize&gt; [[T; N]] {
@@ -8598,5 +8829,58 @@
         <span class="self">self
     </span>}
 }
+
+<span class="doccomment">/// This checks every index against each other, and against `len`.
+///
+/// This will do `binomial(N + 1, 2) = N * (N + 1) / 2 = 0, 1, 3, 6, 10, ..`
+/// comparison operations.
+</span><span class="kw">fn </span>get_many_check_valid&lt;<span class="kw">const </span>N: usize&gt;(indices: <span class="kw-2">&amp;</span>[usize; N], len: usize) -&gt; bool {
+    <span class="comment">// NB: The optimzer should inline the loops into a sequence
+    // of instructions without additional branching.
+    </span><span class="kw">let </span><span class="kw-2">mut </span>valid = <span class="bool-val">true</span>;
+    <span class="kw">for </span>(i, <span class="kw-2">&amp;</span>idx) <span class="kw">in </span>indices.iter().enumerate() {
+        valid &amp;= idx &lt; len;
+        <span class="kw">for </span><span class="kw-2">&amp;</span>idx2 <span class="kw">in </span><span class="kw-2">&amp;</span>indices[..i] {
+            valid &amp;= idx != idx2;
+        }
+    }
+    valid
+}
+
+<span class="doccomment">/// The error type returned by [`get_many_mut&lt;N&gt;`][`slice::get_many_mut`].
+///
+/// It indicates one of two possible errors:
+/// - An index is out-of-bounds.
+/// - The same index appeared multiple times in the array.
+///
+/// # Examples
+///
+/// ```
+/// #![feature(get_many_mut)]
+///
+/// let v = &amp;mut [1, 2, 3];
+/// assert!(v.get_many_mut([0, 999]).is_err());
+/// assert!(v.get_many_mut([1, 1]).is_err());
+/// ```
+</span><span class="attribute">#[unstable(feature = <span class="string">&quot;get_many_mut&quot;</span>, issue = <span class="string">&quot;104642&quot;</span>)]
+</span><span class="comment">// NB: The N here is there to be forward-compatible with adding more details
+// to the error type at a later point
+</span><span class="kw">pub struct </span>GetManyMutError&lt;<span class="kw">const </span>N: usize&gt; {
+    _private: (),
+}
+
+<span class="attribute">#[unstable(feature = <span class="string">&quot;get_many_mut&quot;</span>, issue = <span class="string">&quot;104642&quot;</span>)]
+</span><span class="kw">impl</span>&lt;<span class="kw">const </span>N: usize&gt; fmt::Debug <span class="kw">for </span>GetManyMutError&lt;N&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">&quot;GetManyMutError&quot;</span>).finish_non_exhaustive()
+    }
+}
+
+<span class="attribute">#[unstable(feature = <span class="string">&quot;get_many_mut&quot;</span>, issue = <span class="string">&quot;104642&quot;</span>)]
+</span><span class="kw">impl</span>&lt;<span class="kw">const </span>N: usize&gt; fmt::Display <span class="kw">for </span>GetManyMutError&lt;N&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        fmt::Display::fmt(<span class="string">&quot;an index is out of bounds or appeared multiple times in the array&quot;</span>, f)
+    }
+}
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

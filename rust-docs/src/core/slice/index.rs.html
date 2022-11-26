@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/slice/index.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>index.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/slice/index.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>index.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -816,6 +816,22 @@
 <span id="816">816</span>
 <span id="817">817</span>
 <span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Indexing implementations for `[T]`.
 
 </span><span class="kw">use </span><span class="kw">crate</span>::intrinsics::assert_unsafe_precondition;
@@ -1050,7 +1066,10 @@
         // `self` is in bounds of `slice` so `self` cannot overflow an `isize`,
         // so the call to `add` is safe.
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: usize, slice: <span class="kw-2">*const </span>[T]) =&gt; this &lt; slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked requires that the index is within the slice&quot;</span>,
+                [T](this: usize, slice: <span class="kw-2">*const </span>[T]) =&gt; this &lt; slice.len()
+            );
             slice.as_ptr().add(<span class="self">self</span>)
         }
     }
@@ -1060,7 +1079,10 @@
         <span class="kw">let </span>this = <span class="self">self</span>;
         <span class="comment">// SAFETY: see comments for `get_unchecked` above.
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: usize, slice: <span class="kw-2">*mut </span>[T]) =&gt; this &lt; slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked_mut requires that the index is within the slice&quot;</span>,
+                [T](this: usize, slice: <span class="kw-2">*mut </span>[T]) =&gt; this &lt; slice.len()
+            );
             slice.as_mut_ptr().add(<span class="self">self</span>)
         }
     }
@@ -1113,8 +1135,10 @@
         // so the call to `add` is safe.
 
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](end: usize, slice: <span class="kw-2">*const </span>[T]) =&gt;
-                end &lt;= slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked requires that the index is within the slice&quot;</span>,
+                [T](end: usize, slice: <span class="kw-2">*const </span>[T]) =&gt; end &lt;= slice.len()
+            );
             ptr::slice_from_raw_parts(slice.as_ptr().add(<span class="self">self</span>.start()), <span class="self">self</span>.len())
         }
     }
@@ -1124,8 +1148,10 @@
         <span class="kw">let </span>end = <span class="self">self</span>.end();
         <span class="comment">// SAFETY: see comments for `get_unchecked` above.
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](end: usize, slice: <span class="kw-2">*mut </span>[T]) =&gt;
-                end &lt;= slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked_mut requires that the index is within the slice&quot;</span>,
+                [T](end: usize, slice: <span class="kw-2">*mut </span>[T]) =&gt; end &lt;= slice.len()
+            );
             ptr::slice_from_raw_parts_mut(slice.as_mut_ptr().add(<span class="self">self</span>.start()), <span class="self">self</span>.len())
         }
     }
@@ -1185,8 +1211,11 @@
         // so the call to `add` is safe.
 
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: ops::Range&lt;usize&gt;, slice: <span class="kw-2">*const </span>[T]) =&gt;
-            this.end &gt;= this.start &amp;&amp; this.end &lt;= slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked requires that the range is within the slice&quot;</span>,
+                [T](this: ops::Range&lt;usize&gt;, slice: <span class="kw-2">*const </span>[T]) =&gt;
+                this.end &gt;= this.start &amp;&amp; this.end &lt;= slice.len()
+            );
             ptr::slice_from_raw_parts(slice.as_ptr().add(<span class="self">self</span>.start), <span class="self">self</span>.end - <span class="self">self</span>.start)
         }
     }
@@ -1196,8 +1225,11 @@
         <span class="kw">let </span>this = ops::Range { start: <span class="self">self</span>.start, end: <span class="self">self</span>.end };
         <span class="comment">// SAFETY: see comments for `get_unchecked` above.
         </span><span class="kw">unsafe </span>{
-            <span class="macro">assert_unsafe_precondition!</span>([T](this: ops::Range&lt;usize&gt;, slice: <span class="kw-2">*mut </span>[T]) =&gt;
-                this.end &gt;= this.start &amp;&amp; this.end &lt;= slice.len());
+            <span class="macro">assert_unsafe_precondition!</span>(
+                <span class="string">&quot;slice::get_unchecked_mut requires that the range is within the slice&quot;</span>,
+                [T](this: ops::Range&lt;usize&gt;, slice: <span class="kw-2">*mut </span>[T]) =&gt;
+                this.end &gt;= this.start &amp;&amp; this.end &lt;= slice.len()
+            );
             ptr::slice_from_raw_parts_mut(slice.as_mut_ptr().add(<span class="self">self</span>.start), <span class="self">self</span>.end - <span class="self">self</span>.start)
         }
     }
@@ -1635,4 +1667,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>

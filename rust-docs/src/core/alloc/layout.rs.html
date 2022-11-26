@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/alloc/layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.66.0.css"><link rel="stylesheet" href="../../../rustdoc1.66.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.66.0.css" disabled><link rel="stylesheet" href="../../../dark1.66.0.css" disabled><link rel="stylesheet" href="../../../light1.66.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.66.0.js"></script><script defer src="../../../source-script1.66.0.js"></script><script defer src="../../../source-files1.66.0.js"></script><script defer src="../../../main1.66.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.66.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.66.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.66.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.66.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.66.0.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.66.0.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/alloc/layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize1.67.0.css"><link rel="stylesheet" href="../../../rustdoc1.67.0.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu1.67.0.css" disabled><link rel="stylesheet" href="../../../dark1.67.0.css" disabled><link rel="stylesheet" href="../../../light1.67.0.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage1.67.0.js"></script><script defer src="../../../source-script1.67.0.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../main1.67.0.js"></script><noscript><link rel="stylesheet" href="../../../noscript1.67.0.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x161.67.0.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x321.67.0.png"><link rel="icon" type="image/svg+xml" href="../../../favicon1.67.0.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../rust-logo1.67.0.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel1.67.0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -475,6 +475,20 @@
 <span id="475">475</span>
 <span id="476">476</span>
 <span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
 </pre><pre class="rust"><code><span class="comment">// Seemingly inconsequential code changes to this file can lead to measurable
 // performance impact on compilation times, due at least in part to the fact
 // that the layout code gets called from many instantiations of the various
@@ -484,8 +498,8 @@
 </span><span class="kw">use </span><span class="kw">crate</span>::cmp;
 <span class="kw">use </span><span class="kw">crate</span>::error::Error;
 <span class="kw">use </span><span class="kw">crate</span>::fmt;
-<span class="kw">use </span><span class="kw">crate</span>::mem::{<span class="self">self</span>, ValidAlign};
-<span class="kw">use </span><span class="kw">crate</span>::ptr::NonNull;
+<span class="kw">use </span><span class="kw">crate</span>::mem;
+<span class="kw">use </span><span class="kw">crate</span>::ptr::{Alignment, NonNull};
 
 <span class="comment">// While this function is used in one place and its implementation
 // could be inlined, the previous attempts to do so made rustc
@@ -523,7 +537,7 @@
     //
     // (However, we do not analogously require `align &gt;= sizeof(void*)`,
     //  even though that is *also* a requirement of `posix_memalign`.)
-    </span>align: ValidAlign,
+    </span>align: Alignment,
 }
 
 <span class="kw">impl </span>Layout {
@@ -548,11 +562,11 @@
         }
 
         <span class="comment">// SAFETY: just checked that align is a power of two.
-        </span>Layout::from_size_valid_align(size, <span class="kw">unsafe </span>{ ValidAlign::new_unchecked(align) })
+        </span>Layout::from_size_alignment(size, <span class="kw">unsafe </span>{ Alignment::new_unchecked(align) })
     }
 
     <span class="attribute">#[inline(always)]
-    </span><span class="kw">const fn </span>max_size_for_align(align: ValidAlign) -&gt; usize {
+    </span><span class="kw">const fn </span>max_size_for_align(align: Alignment) -&gt; usize {
         <span class="comment">// (power-of-two implies align != 0.)
 
         // Rounded up size is:
@@ -572,7 +586,7 @@
 
     <span class="doccomment">/// Internal helper constructor to skip revalidating alignment validity.
     </span><span class="attribute">#[inline]
-    </span><span class="kw">const fn </span>from_size_valid_align(size: usize, align: ValidAlign) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
+    </span><span class="kw">const fn </span>from_size_alignment(size: usize, align: Alignment) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
         <span class="kw">if </span>size &gt; <span class="self">Self</span>::max_size_for_align(align) {
             <span class="kw">return </span><span class="prelude-val">Err</span>(LayoutError);
         }
@@ -594,7 +608,7 @@
     #[rustc_allow_const_fn_unstable(ptr_alignment_type)]
     </span><span class="kw">pub const unsafe fn </span>from_size_align_unchecked(size: usize, align: usize) -&gt; <span class="self">Self </span>{
         <span class="comment">// SAFETY: the caller is required to uphold the preconditions.
-        </span><span class="kw">unsafe </span>{ Layout { size, align: ValidAlign::new_unchecked(align) } }
+        </span><span class="kw">unsafe </span>{ Layout { size, align: Alignment::new_unchecked(align) } }
     }
 
     <span class="doccomment">/// The minimum size in bytes for a memory block of this layout.
@@ -634,9 +648,10 @@
     /// allocate backing structure for `T` (which could be a trait
     /// or other unsized type like a slice).
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;alloc_layout&quot;</span>, since = <span class="string">&quot;1.28.0&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[must_use]
     #[inline]
-    </span><span class="kw">pub fn </span>for_value&lt;T: <span class="question-mark">?</span>Sized&gt;(t: <span class="kw-2">&amp;</span>T) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub const fn </span>for_value&lt;T: <span class="question-mark">?</span>Sized&gt;(t: <span class="kw-2">&amp;</span>T) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(size, align) = (mem::size_of_val(t), mem::align_of_val(t));
         <span class="comment">// SAFETY: see rationale in `new` for why this is using the unsafe variant
         </span><span class="kw">unsafe </span>{ Layout::from_size_align_unchecked(size, align) }
@@ -668,8 +683,9 @@
     /// [trait object]: ../../book/ch17-02-trait-objects.html
     /// [extern type]: ../../unstable-book/language-features/extern-types.html
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;layout_for_ptr&quot;</span>, issue = <span class="string">&quot;69835&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub unsafe fn </span>for_value_raw&lt;T: <span class="question-mark">?</span>Sized&gt;(t: <span class="kw-2">*const </span>T) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub const unsafe fn </span>for_value_raw&lt;T: <span class="question-mark">?</span>Sized&gt;(t: <span class="kw-2">*const </span>T) -&gt; <span class="self">Self </span>{
         <span class="comment">// SAFETY: we pass along the prerequisites of these functions to the caller
         </span><span class="kw">let </span>(size, align) = <span class="kw">unsafe </span>{ (mem::size_of_val_raw(t), mem::align_of_val_raw(t)) };
         <span class="comment">// SAFETY: see rationale in `new` for why this is using the unsafe variant
@@ -706,8 +722,9 @@
     /// Returns an error if the combination of `self.size()` and the given
     /// `align` violates the conditions listed in [`Layout::from_size_align`].
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;alloc_layout_manipulation&quot;</span>, since = <span class="string">&quot;1.44.0&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>align_to(<span class="kw-2">&amp;</span><span class="self">self</span>, align: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>align_to(<span class="kw-2">&amp;</span><span class="self">self</span>, align: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
         Layout::from_size_align(<span class="self">self</span>.size(), cmp::max(<span class="self">self</span>.align(), align))
     }
 
@@ -764,10 +781,11 @@
     /// This is equivalent to adding the result of `padding_needed_for`
     /// to the layout&#39;s current size.
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;alloc_layout_manipulation&quot;</span>, since = <span class="string">&quot;1.44.0&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[must_use = <span class="string">&quot;this returns a new `Layout`, \
                   without modifying the original&quot;</span>]
     #[inline]
-    </span><span class="kw">pub fn </span>pad_to_align(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Layout {
+    </span><span class="kw">pub const fn </span>pad_to_align(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Layout {
         <span class="kw">let </span>pad = <span class="self">self</span>.padding_needed_for(<span class="self">self</span>.align());
         <span class="comment">// This cannot overflow. Quoting from the invariant of Layout:
         // &gt; `size`, when rounded up to the nearest multiple of `align`,
@@ -788,8 +806,9 @@
     ///
     /// On arithmetic overflow, returns `LayoutError`.
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;alloc_layout_extra&quot;</span>, issue = <span class="string">&quot;55724&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>repeat(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, usize), LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>repeat(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, usize), LayoutError&gt; {
         <span class="comment">// This cannot overflow. Quoting from the invariant of Layout:
         // &gt; `size`, when rounded up to the nearest multiple of `align`,
         // &gt; must not overflow isize (i.e., the rounded value must be
@@ -798,7 +817,8 @@
         <span class="kw">let </span>alloc_size = padded_size.checked_mul(n).ok_or(LayoutError)<span class="question-mark">?</span>;
 
         <span class="comment">// The safe constructor is called here to enforce the isize size limit.
-        </span>Layout::from_size_valid_align(alloc_size, <span class="self">self</span>.align).map(|layout| (layout, padded_size))
+        </span><span class="kw">let </span>layout = Layout::from_size_alignment(alloc_size, <span class="self">self</span>.align)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>((layout, padded_size))
     }
 
     <span class="doccomment">/// Creates a layout describing the record for `self` followed by
@@ -847,8 +867,9 @@
     /// # assert_eq!(repr_c(&amp;[u64, u32, u16, u32]), Ok((s, vec![0, 8, 12, 16])));
     /// ```
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;alloc_layout_manipulation&quot;</span>, since = <span class="string">&quot;1.44.0&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>extend(<span class="kw-2">&amp;</span><span class="self">self</span>, next: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, usize), LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>extend(<span class="kw-2">&amp;</span><span class="self">self</span>, next: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="self">Self</span>, usize), LayoutError&gt; {
         <span class="kw">let </span>new_align = cmp::max(<span class="self">self</span>.align, next.align);
         <span class="kw">let </span>pad = <span class="self">self</span>.padding_needed_for(next.align());
 
@@ -856,7 +877,7 @@
         <span class="kw">let </span>new_size = offset.checked_add(next.size()).ok_or(LayoutError)<span class="question-mark">?</span>;
 
         <span class="comment">// The safe constructor is called here to enforce the isize size limit.
-        </span><span class="kw">let </span>layout = Layout::from_size_valid_align(new_size, new_align)<span class="question-mark">?</span>;
+        </span><span class="kw">let </span>layout = Layout::from_size_alignment(new_size, new_align)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((layout, offset))
     }
 
@@ -873,11 +894,12 @@
     ///
     /// On arithmetic overflow, returns `LayoutError`.
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;alloc_layout_extra&quot;</span>, issue = <span class="string">&quot;55724&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>repeat_packed(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>repeat_packed(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
         <span class="kw">let </span>size = <span class="self">self</span>.size().checked_mul(n).ok_or(LayoutError)<span class="question-mark">?</span>;
         <span class="comment">// The safe constructor is called here to enforce the isize size limit.
-        </span>Layout::from_size_valid_align(size, <span class="self">self</span>.align)
+        </span>Layout::from_size_alignment(size, <span class="self">self</span>.align)
     }
 
     <span class="doccomment">/// Creates a layout describing the record for `self` followed by
@@ -887,11 +909,12 @@
     ///
     /// On arithmetic overflow, returns `LayoutError`.
     </span><span class="attribute">#[unstable(feature = <span class="string">&quot;alloc_layout_extra&quot;</span>, issue = <span class="string">&quot;55724&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>extend_packed(<span class="kw-2">&amp;</span><span class="self">self</span>, next: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>extend_packed(<span class="kw-2">&amp;</span><span class="self">self</span>, next: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
         <span class="kw">let </span>new_size = <span class="self">self</span>.size().checked_add(next.size()).ok_or(LayoutError)<span class="question-mark">?</span>;
         <span class="comment">// The safe constructor is called here to enforce the isize size limit.
-        </span>Layout::from_size_valid_align(new_size, <span class="self">self</span>.align)
+        </span>Layout::from_size_alignment(new_size, <span class="self">self</span>.align)
     }
 
     <span class="doccomment">/// Creates a layout describing the record for a `[T; n]`.
@@ -899,13 +922,18 @@
     /// On arithmetic overflow or when the total size would exceed
     /// `isize::MAX`, returns `LayoutError`.
     </span><span class="attribute">#[stable(feature = <span class="string">&quot;alloc_layout_manipulation&quot;</span>, since = <span class="string">&quot;1.44.0&quot;</span>)]
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_alloc_layout&quot;</span>, issue = <span class="string">&quot;67521&quot;</span>)]
     #[inline]
-    </span><span class="kw">pub fn </span>array&lt;T&gt;(n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
+    </span><span class="kw">pub const fn </span>array&lt;T&gt;(n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LayoutError&gt; {
         <span class="comment">// Reduce the amount of code we need to monomorphize per `T`.
-        </span><span class="kw">return </span>inner(mem::size_of::&lt;T&gt;(), ValidAlign::of::&lt;T&gt;(), n);
+        </span><span class="kw">return </span>inner(mem::size_of::&lt;T&gt;(), Alignment::of::&lt;T&gt;(), n);
 
         <span class="attribute">#[inline]
-        </span><span class="kw">fn </span>inner(element_size: usize, align: ValidAlign, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Layout, LayoutError&gt; {
+        </span><span class="kw">const fn </span>inner(
+            element_size: usize,
+            align: Alignment,
+            n: usize,
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;Layout, LayoutError&gt; {
             <span class="comment">// We need to check two things about the size:
             //  - That the total size won&#39;t overflow a `usize`, and
             //  - That the total size still fits in an `isize`.
@@ -920,7 +948,7 @@
 
             <span class="comment">// SAFETY: We just checked above that the `array_size` will not
             // exceed `isize::MAX` even when rounded up to the alignment.
-            // And `ValidAlign` guarantees it&#39;s a power of two.
+            // And `Alignment` guarantees it&#39;s a power of two.
             </span><span class="kw">unsafe </span>{ <span class="prelude-val">Ok</span>(Layout::from_size_align_unchecked(array_size, align.as_usize())) }
         }
     }
@@ -953,4 +981,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.66.0" data-rustdoc-version="1.65.0-beta.1 (2a65764f2 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="core" data-themes="ayu,dark,light" data-resource-suffix="1.67.0" data-rustdoc-version="1.66.0-beta.1 (e080cc5a6 2022-11-01)" ></div></body></html>
